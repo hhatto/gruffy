@@ -1,0 +1,43 @@
+About
+=====
+Gruffy is a yet another Pure Python Graphing Library.
+Using `pgmagick`_ (GraphicsMagick) .
+
+.. _`pgmagick`: http://pypi.python.org/pypi/pgmagick/
+
+
+Install
+=======
+
+    $ pip install gruffy
+
+
+Require
+=======
+`pgmagick`_ module.
+
+package install on Ubuntu::
+
+    $ apt-get install libgraphicsmagick++-dev
+    $ apt-get install libboost-python1.40-dev
+    $ pip install pgmagick
+
+
+Sample Code
+===========
+
+Bar Graph Sample::
+
+    from bar import Bar
+
+    g = Bar()
+    g.title = "Gruffy's Graph"
+
+    g.data("Apples", [1, 2, 3, 4, 4, 3])
+    g.data("Oranges", [4, 8, 7, 9, 8, 9])
+    g.data("Watermelon", [2, 3, 1, 5, 6, 8])
+    g.data("Peaches", [9, 9, 10, 8, 7, 9])
+
+    g.labels = {0: '2003', 2: '2004', 4: '2005'}
+
+    g.write('sample.png')
