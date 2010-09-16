@@ -1,14 +1,14 @@
-import base
-from bar_conversion import BarConversion
+from gruffy.base import *
+from gruffy.bar_conversion import BarConversion
 import pgmagick as magick
 
 
-class Bar(base.Base):
+class Bar(Base):
 
     bar_spacing = 0
 
     def __init__(self, *args):
-        base.Base.__init__(self)
+        Base.__init__(self)
 
     def draw(self):
         if len(self.labels.keys()) > self.column_count:
@@ -45,7 +45,7 @@ class Bar(base.Base):
                 conversion.zero = -self.minimum_value / self.spread
 
         for row_index, data_row in enumerate(self.norm_data):
-            for point_index, data_point in enumerate(data_row[base.DATA_VALUES_INDEX]):
+            for point_index, data_point in enumerate(data_row[DATA_VALUES_INDEX]):
                 left_x = self.graph_left + \
                            (self.bar_width * \
                              (row_index + point_index + \
@@ -53,7 +53,7 @@ class Bar(base.Base):
                 right_x = left_x + self.bar_width * self.bar_spacing
                 conv = conversion.getLeftYRightYscaled(data_point)
 
-                dl.append(magick.DrawableFillColor(magick.Color(data_row[base.DATA_COLOR_INDEX])))
+                dl.append(magick.DrawableFillColor(magick.Color(data_row[DATA_COLOR_INDEX])))
                 dl.append(magick.DrawableRectangle(left_x, conv[0], right_x, conv[1]))
 
                 label_center = self.graph_left + \
