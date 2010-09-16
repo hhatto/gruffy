@@ -34,7 +34,7 @@ class Base(object):
 
         self.initialize_ivars()
         self.reset_themes()
-        #self.theme_keynote()
+        self.theme_pastel()
 
     def initialize_ivars(self):
         """Internal for calculations"""
@@ -117,6 +117,21 @@ class Base(object):
                 'background_colors': ['black', '#4a465a'],
         })
 
+    def theme_pastel(self):
+        self.colors = ['#a9dada',   # blue
+                       '#aedaa9',   # green
+                       '#daaea9',   # peach
+                       '#dadaa9',   # yellow
+                       '#a9a9da',   # dk purple
+                       '#daaeda',   # purple
+                       '#dadada',   # grey
+                      ]
+
+        self.theme({'colors': self.colors,
+                    'marker_color': '#aea9a9',  # Grey
+                    'font_color': 'black',
+                    'background_colors': 'white'})
+
     def theme_greyscale(self):
         self.colors = ['#282828', '#383838', '#686868',
                        '#989898', '#c8c8c8', '#e8e8e8']
@@ -127,7 +142,8 @@ class Base(object):
 
     def render_gradiated_background(self, top_color, bottom_color):
         # TODO: porting GradientFill
-        return Image(Geometry(int(self.columns), int(self.rows)), Color('gradient:black-white'))
+        return Image(Geometry(int(self.columns), int(self.rows)),
+                     Color('gradient:black-white'))
 
     def render_solid_background(self, color):
         return Image(Geometry(int(self.columns), int(self.rows)), color)
@@ -149,8 +165,7 @@ class Base(object):
                 'marker_color': 'white',
                 'font_color': 'black',
                 'background_colors': None,
-                'background_image': None
-        }
+                'background_image': None}
         defaults.update(options)
         self.theme_options = defaults
         self.colors = self.theme_options['colors']
