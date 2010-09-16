@@ -7,13 +7,13 @@ sys.path.insert(0, 'gruffy')
 
 setup(
     name='gruffy',
-    version='0.0.1',
+    version='0.0.2',
     description="Gruffy is Python implemetation of Gruff(Ruby Graphing Library)",
-    long_description=open("README").read(),
+    long_description=open("README.rst").read(),
     license='MIT',
     author='Hideo Hattori',
     author_email='hhatto.jp@gmail.com',
-    url='http://www.hexacosa.net/project/pyprof2html/',
+    url='http://pypi.python.org/pypi/gruffy/',
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Operating System :: Unix',
@@ -21,6 +21,7 @@ setup(
         'Programming Language :: Python',
         'Topic :: Multimedia :: Graphics'],
     keywords="graph visualize",
+    install_requires=['pgmagick'],
     packages=['gruffy'],
     zip_safe=False,
 )
