@@ -11,6 +11,7 @@ This module using `pgmagick`_ (GraphicsMagick) .
 
 Install
 =======
+Install from PyPI:
 
     $ pip install gruffy
 
