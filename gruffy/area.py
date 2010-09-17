@@ -1,5 +1,4 @@
 from gruffy.base import *
-import pgmagick as magick
 
 
 class Area(Base):
