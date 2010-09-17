@@ -295,7 +295,10 @@ class Base(object):
             dl.append(DrawableStrokeColor(Color('transparent')))
             dl.append(DrawablePointSize(self.scale_fontsize(self.marker_font_size)))
             label_font_height = self.calculate_caps_height(self.marker_font_size) / 2
-            dl.append(DrawableText(x_offset, y_offset + label_font_height,
+            label_text_width = self.calculate_width(self.marker_font_size,
+                                                    self.labels[index])
+            dl.append(DrawableText(x_offset - label_text_width / 2.0,
+                                   y_offset + label_font_height,
                                    self.labels[index]))
             self.base_image.draw(dl)
             self.labels_seen[index] = 1
@@ -506,13 +509,20 @@ class Base(object):
         else:
             longest_left_label_width = 0
             if self.has_left_labels:
-                #longest_left_label_width = calculate_width(self.marker_font_size,
-                #                             labels.values.inject('') { |value, memo| (value.to_s.length > memo.to_s.length) ? value : memo }) * 1.25
-                # TODO: fixme
-                longest_left_label_width = 0
+                value = ""
+                longest_value = None
+                for memo in self.labels.values():
+                    if len(str(value)) > len(str(memo)):
+                        longest_value = value
+                    else:
+                        longest_value = memo
+                        value = memo
+                longest_left_label_width = self.calculate_width(
+                        self.marker_font_size, longest_value) * 1.25
             else:
-                longest_left_label_width = self.calculate_width(self.marker_font_size,
-                                                           float(self.label(self.maximum_value)))
+                longest_left_label_width = self.calculate_width(
+                                             self.marker_font_size,
+                                             self.label(float(self.maximum_value)))
 
             # Shift graph if left line numbers are hidden
             if self.hide_line_numbers and not self.has_left_labels:

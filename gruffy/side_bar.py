@@ -14,6 +14,7 @@ class SideBar(Base):
 
     def _draw_bars(self):
         dl = DrawableList()
+
         self.bar_spacing = self.bar_spacing or 0.9
         self.bars_width = self.graph_height / float(self.column_count)
         self.bar_width = self.bars_width / len(self.norm_data)
@@ -67,7 +68,7 @@ class SideBar(Base):
             x = self.graph_right - (line_diff * index) - 1
             dl.append(DrawableLine(x, self.graph_bottom, x, self.graph_top))
             diff = index - number_of_lines
-            marker_label = abs(diff) * increment + self.minimum_value
+            marker_label = int(abs(diff) * increment + self.minimum_value)
 
             if not self.hide_line_numbers:
                 dl.append(DrawableFillColor(Color(self.font_color)))
@@ -75,25 +76,35 @@ class SideBar(Base):
                 dl.append(DrawableFont(font, StyleType.NormalStyle, 400,
                                        StretchType.NormalStretch))
                 dl.append(DrawableStrokeColor(Color('transparent')))
-                dl.append(DrawablePointSize(self.scale_fontsize(self.marker_font_size)))
-                dl.append(DrawableGravity(GravityType.CenterGravity))
+                marker_font_size = self.scale_fontsize(self.marker_font_size)
+                dl.append(DrawablePointSize(self.marker_font_size))
+                dl.append(DrawableGravity(GravityType.NorthWestGravity))
+                text_width = self.calculate_width(marker_font_size,
+                                                  str(marker_label))
                 # TODO Center text over line
+                x -= text_width / 2
                 dl.append(DrawableText(x, self.graph_bottom + (LABEL_MARGIN * 2.0),
                                           str(marker_label)))
             dl.append(DrawableStrokeAntialias(True))
-            self.base_image.draw(dl)
+        self.base_image.draw(dl)
 
     def draw_label(self, y_offset, index):
         if self.labels.has_key(index) and not self.labels_seen.has_key(index):
             dl = DrawableList()
             dl.append(DrawableFillColor(self.font_color))
             font = self.font if self.font else ""
+            dl.append(DrawableGravity(GravityType.NorthGravity))
             dl.append(DrawableFont(font, StyleType.NormalStyle, 400,
                                    StretchType.NormalStretch))
             dl.append(DrawableStrokeColor(Color('transparent')))
-            dl.append(DrawablePointSize(self.scale_fontsize(self.marker_font_size)))
-            dl.append(DrawableGravity(GravityType.WestGravity))
-            dl.append(DrawableText(-self.graph_left + LABEL_MARGIN * 2.0, y_offset,
-                                   self.labels[index]))
+            marker_font_size = self.scale_fontsize(self.marker_font_size)
+            dl.append(DrawablePointSize(marker_font_size))
+            font_hight = self.calculate_caps_height(self.marker_font_size)
+            text_width = self.calculate_width(marker_font_size,
+                                              self.labels[index])
+            x = -(self.columns / 2 - self.graph_left + LABEL_MARGIN * 2.0 + \
+                  text_width / 2.0)
+            y = y_offset + font_hight / 2.0
+            dl.append(DrawableText(x, y, self.labels[index]))
             self.labels_seen[index] = 1
             self.base_image.draw(dl)
