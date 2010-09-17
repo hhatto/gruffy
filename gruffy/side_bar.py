@@ -7,9 +7,9 @@ class SideBar(Base):
 
     def draw(self):
         self.has_left_labels = True
+        SideBar.__base__.draw(self)
         if not self.has_gdata:
             return
-        SideBar.__base__.draw(self)
         self._draw_bars()
 
     def _draw_bars(self):

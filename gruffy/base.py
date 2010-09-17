@@ -301,14 +301,17 @@ class Base(object):
             self.labels_seen[index] = 1
 
     def draw_no_data(self):
-        self.base_image.fillColor(Color(self.font_color))
-        if self.font:
-            self.base_image.font = self.font
-        self.base_image.strokeColor('transparent')
-        self.base_image.font_weight = 400 #NormalWeight
-        self.base_image.fontPointsize(self.scale_fontsize(80))
-        self.annotate_scaled(self.raw_columns, self.raw_rows/2.0,
-                             self.no_data_message, self.scale, GravityType.CenterGravity)
+        dl = DrawableList()
+        dl.append(DrawableFillColor(Color(self.font_color)))
+        font = self.font if self.font else ""
+        dl.append(DrawableGravity(GravityType.CenterGravity))
+        dl.append(DrawableFillColor(Color(self.font_color)))
+        dl.append(DrawableFont(font, StyleType.NormalStyle, 800,
+                               StretchType.NormalStretch))
+        dl.append(DrawablePointSize(self.scale_fontsize(80)))
+        dl.append(DrawableText(0, 0,
+                               self.no_data_message))
+        self.base_image.draw(dl)
 
     def scale_fontsize(self, value):
         return value * self.scale
@@ -342,6 +345,7 @@ class Base(object):
                 return -1
             return 0
         self.norm_data.sort(normcompare)
+        self.norm_data.reverse()
 
     def center(self, lsize):
         return self.raw_columns / 2 - lsize / 2
@@ -376,10 +380,17 @@ class Base(object):
         else:
             current_y_offset = self.top_margin + self.title_margin + self.title_caps_height
 
+        dl.append(DrawableStrokeColor('transparent'))
         for index, legend_label in enumerate(self.legend_labels):
+            # Now draw box with color of this dataset
+            dl.append(DrawableFillColor(Color(self.gdata[index][DATA_COLOR_INDEX])))
+            dl.append(DrawableRectangle(current_x_offset,
+                                        current_y_offset - legend_square_width / 2.0,
+                                        current_x_offset + legend_square_width,
+                                        current_y_offset + legend_square_width / 2.0))
+
             # Draw label
             dl.append(DrawableFillColor(Color(self.font_color)))
-            dl.append(DrawableStrokeColor('transparent'))
             font = self.font if self.font else DEFAULT_FONT
             dl.append(DrawableFont(font, StyleType.NormalStyle, 400,
                                    StretchType.NormalStretch))
@@ -388,14 +399,6 @@ class Base(object):
             dl.append(DrawableText(current_x_offset + (legend_square_width * 1.7),
                                    current_y_offset + self.legend_caps_height / 3,
                                    str(legend_label)))
-
-            # Now draw box with color of this dataset
-            dl.append(DrawableStrokeColor('transparent'))
-            dl.append(DrawableFillColor(Color(self.gdata[index][DATA_COLOR_INDEX])))
-            dl.append(DrawableRectangle(current_x_offset,
-                                        current_y_offset - legend_square_width / 2.0,
-                                        current_x_offset + legend_square_width,
-                                        current_y_offset + legend_square_width / 2.0))
 
             dl.append(DrawablePointSize(self.scale_fontsize(self.legend_font_size)))
             metrics = TypeMetric()
@@ -574,3 +577,7 @@ class Base(object):
     def write(self, filename="graph.png"):
         self.draw()
         self.base_image.write(filename)
+
+    def display(self):
+        self.draw()
+        self.base_image.display()

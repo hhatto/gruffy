@@ -11,9 +11,9 @@ class Bar(Base):
             self.center_labels_over_point = True
         else:
             self.center_labels_over_point = False
+        Bar.__base__.draw(self)
         if not self.has_gdata:
             return
-        Bar.__base__.draw(self)
         self._draw_bars()
 
     def _draw_bars(self):
