@@ -1,8 +1,11 @@
 About
 =====
-Gruffy is a yet another Pure Python Graphing Library.
-Using `pgmagick`_ (GraphicsMagick) .
+Gruffy is a yet another Python Graphing Library.
+inspired by `Gruff`_ (Ruby Graphing Library).
 
+This module using `pgmagick`_ (GraphicsMagick) .
+
+.. _`Gruff`: http://nubyonrails.com/pages/gruff
 .. _`pgmagick`: http://pypi.python.org/pypi/pgmagick/
 
 
@@ -23,7 +26,7 @@ package install on Ubuntu::
     $ pip install pgmagick
 
 
-Sample Code
+Basic Usage
 ===========
 
 Bar Graph Sample::
