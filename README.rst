@@ -31,7 +31,7 @@ Basic Usage
 
 Bar Graph Sample::
 
-    from bar import Bar
+    from gruffy.bar import Bar
 
     g = Bar()
     g.title = "Gruffy's Graph"
