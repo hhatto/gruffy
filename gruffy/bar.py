@@ -1,14 +1,10 @@
 from gruffy.base import *
 from gruffy.bar_conversion import BarConversion
-import pgmagick as magick
 
 
 class Bar(Base):
 
     bar_spacing = 0
-
-    def __init__(self, *args):
-        Base.__init__(self)
 
     def draw(self):
         if len(self.labels.keys()) > self.column_count:
@@ -26,8 +22,8 @@ class Bar(Base):
                             float(self.column_count * len(self.gdata))
         padding = (self.bar_width * (1 - self.bar_spacing)) / 2
 
-        dl = magick.DrawableList()
-        dl.append(magick.DrawableStrokeOpacity(0.0))
+        dl = DrawableList()
+        dl.append(DrawableStrokeOpacity(0.0))
 
         conversion = BarConversion()
         conversion.graph_height = self.graph_height
@@ -46,15 +42,14 @@ class Bar(Base):
 
         for row_index, data_row in enumerate(self.norm_data):
             for point_index, data_point in enumerate(data_row[DATA_VALUES_INDEX]):
-                left_x = self.graph_left + \
-                           (self.bar_width * \
+                left_x = self.graph_left + (self.bar_width * \
                              (row_index + point_index + \
                              ((len(self.gdata) - 1) * point_index))) + padding
                 right_x = left_x + self.bar_width * self.bar_spacing
                 conv = conversion.getLeftYRightYscaled(data_point)
 
-                dl.append(magick.DrawableFillColor(magick.Color(data_row[DATA_COLOR_INDEX])))
-                dl.append(magick.DrawableRectangle(left_x, conv[0], right_x, conv[1]))
+                dl.append(DrawableFillColor(Color(data_row[DATA_COLOR_INDEX])))
+                dl.append(DrawableRectangle(left_x, conv[0], right_x, conv[1]))
 
                 label_center = self.graph_left + \
                                 (len(self.gdata) * self.bar_width * point_index) + \
