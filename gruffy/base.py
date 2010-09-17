@@ -313,6 +313,9 @@ class Base(object):
     def scale_fontsize(self, value):
         return value * self.scale
 
+    def clip_value_if_greater_than(self, value, max_value):
+        return max_value if value > max_value else value
+
     def significant(self, inc):
         if inc == 0:
             return 1.0
@@ -337,7 +340,7 @@ class Base(object):
                 return 1
             elif a_sum < b_sum:
                 return -1
-            return0
+            return 0
         self.norm_data.sort(normcompare)
 
     def center(self, lsize):
