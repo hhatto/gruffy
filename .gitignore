@@ -1,5 +1,6 @@
 *.pyc
-.hg/
 *.egg-info
+*.swp
+.hg/
 build
 dist
