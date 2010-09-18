@@ -306,7 +306,7 @@ class Base(object):
     def draw_no_data(self):
         dl = DrawableList()
         dl.append(DrawableFillColor(Color(self.font_color)))
-        font = self.font if self.font else ""
+        font = self.font if self.font else DEFAULT_FONT
         dl.append(DrawableGravity(GravityType.CenterGravity))
         dl.append(DrawableFillColor(Color(self.font_color)))
         dl.append(DrawableFont(font, StyleType.NormalStyle, 800,

@@ -72,7 +72,7 @@ class SideBar(Base):
 
             if not self.hide_line_numbers:
                 dl.append(DrawableFillColor(Color(self.font_color)))
-                font = self.font if self.font else ""
+                font = self.font if self.font else DEFAULT_FONT
                 dl.append(DrawableFont(font, StyleType.NormalStyle, 400,
                                        StretchType.NormalStretch))
                 dl.append(DrawableStrokeColor(Color('transparent')))
@@ -92,7 +92,7 @@ class SideBar(Base):
         if self.labels.has_key(index) and not self.labels_seen.has_key(index):
             dl = DrawableList()
             dl.append(DrawableFillColor(self.font_color))
-            font = self.font if self.font else ""
+            font = self.font if self.font else DEFAULT_FONT
             dl.append(DrawableGravity(GravityType.NorthGravity))
             dl.append(DrawableFont(font, StyleType.NormalStyle, 400,
                                    StretchType.NormalStretch))
