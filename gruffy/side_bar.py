@@ -17,7 +17,7 @@ class SideBar(Base):
 
         self.bar_spacing = self.bar_spacing or 0.9
         self.bars_width = self.graph_height / float(self.column_count)
-        self.bar_width = self.bars_width / len(self.norm_data)
+        self.bar_width = self.bars_width * self.bar_spacing / len(self.norm_data)
         dl.append(DrawableStrokeOpacity(0.0))
         height = [0 for i in range(self.column_count)]
         length = [self.graph_left for i in range(self.column_count)]
@@ -62,13 +62,13 @@ class SideBar(Base):
         number_of_lines = 5
 
         # TODO Round maximum marker value to a round number like 100, 0.1, 0.5, etc.
-        increment = self.significant(float(self.spread) / number_of_lines)
+        increment = self.significant(float(self.maximum_value) / number_of_lines)
         for index in range(number_of_lines + 1):
             line_diff = (self.graph_right - self.graph_left) / number_of_lines
             x = self.graph_right - (line_diff * index) - 1
             dl.append(DrawableLine(x, self.graph_bottom, x, self.graph_top))
             diff = index - number_of_lines
-            marker_label = int(abs(diff) * increment + self.minimum_value)
+            marker_label = abs(diff) * increment
 
             if not self.hide_line_numbers:
                 dl.append(DrawableFillColor(Color(self.font_color)))
@@ -83,8 +83,8 @@ class SideBar(Base):
                                                   str(marker_label))
                 # TODO Center text over line
                 x -= text_width / 2
-                dl.append(DrawableText(x, self.graph_bottom + (LABEL_MARGIN * 2.0),
-                                          str(marker_label)))
+                y = self.graph_bottom + (LABEL_MARGIN * 2.0)
+                dl.append(DrawableText(x, y, "%.1f" % marker_label))
             dl.append(DrawableStrokeAntialias(True))
         self.base_image.draw(dl)
 
