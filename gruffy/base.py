@@ -362,8 +362,43 @@ class Base(object):
         return self.raw_columns / 2 - lsize / 2
 
     def draw_axis_labels(self):
-        # TODO: None
-        pass
+        if self.x_axis_label:
+            dl = DrawableList()
+            # X Axis
+            # Centered vertically and horizontally by setting the
+            # height to 1.0 and the width to the width of the graph.
+            x_axis_label_y_coordinate = self.graph_bottom + \
+                    LABEL_MARGIN * 2 + self.marker_caps_height
+
+            # TODO Center between graph area
+            dl.append(DrawableFillColor(Color(self.font_color)))
+            font = self.font if self.font else DEFAULT_FONT
+            dl.append(DrawableFont(font, StyleType.NormalStyle, 400,
+                                   StretchType.NormalStretch))
+            dl.append(DrawableStrokeColor('transparent'))
+            dl.append(DrawablePointSize(self.scale_fontsize(self.marker_font_size)))
+            dl.append(DrawableGravity(GravityType.NorthGravity))
+            dl.append(DrawableText(0.0, x_axis_label_y_coordinate,
+                                   self.x_axis_label))
+            self.base_image.draw(dl)
+        if self.y_axis_label:
+            # Y Axis, rotated vertically
+            dl = DrawableList()
+            dl.append(DrawableFillColor(Color(self.font_color)))
+            font = self.font if self.font else DEFAULT_FONT
+            dl.append(DrawableFont(font, StyleType.NormalStyle, 400,
+                                   StretchType.NormalStretch))
+            dl.append(DrawableStrokeColor('transparent'))
+            fontsize = self.scale_fontsize(self.marker_font_size)
+            dl.append(DrawablePointSize(fontsize))
+            dl.append(DrawableRotation(90))
+            dl.append(DrawableGravity(GravityType.WestGravity))
+            x = -(self.calculate_width(fontsize, self.y_axis_label) / 2.0)
+            y = -(self.left_margin + self.marker_caps_height / 2.0)
+            print x, y
+            dl.append(DrawableText(x, y, self.y_axis_label))
+            dl.append(DrawableRotation(-90))
+            self.base_image.draw(dl)
 
     def draw_legend(self):
         if self.hide_legend:
@@ -444,9 +479,9 @@ class Base(object):
         dl.append(DrawableFont(font, StyleType.NormalStyle, 800,
                                StretchType.NormalStretch))
         dl.append(DrawablePointSize(self.scale_fontsize(self.title_font_size)))
-        dl.append(DrawableText(0, self.top_margin + self.title_caps_height/2, self.title))
+        y = self.top_margin + self.title_caps_height / 2.0
+        dl.append(DrawableText(0, y, self.title))
         self.base_image.draw(dl)
-        #self.annotate_scaled(0, , self.title, self.scale, GravityType.NorthGravity)
 
     def setup_drawing(self):
         if not self.has_gdata:
