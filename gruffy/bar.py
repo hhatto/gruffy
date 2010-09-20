@@ -49,6 +49,10 @@ class Bar(Base):
                 conv = conversion.getLeftYRightYscaled(data_point)
 
                 dl.append(DrawableFillColor(Color(data_row['color'])))
+                if type(self.transparent) is float:
+                    dl.append(DrawableFillOpacity(self.transparent))
+                elif self.transparent is True:
+                    dl.append(DrawableFillOpacity(DEFAULT_TRANSPARENCY))
                 dl.append(DrawableRectangle(left_x, conv[0], right_x, conv[1]))
 
                 label_center = self.graph_left + \

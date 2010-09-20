@@ -25,6 +25,10 @@ class SideBar(Base):
 
         for row_index, data_row in enumerate(self.norm_data):
             dl.append(DrawableFillColor(Color(data_row['color'])))
+            if type(self.transparent) is float:
+                dl.append(DrawableFillOpacity(self.transparent))
+            elif self.transparent is True:
+                dl.append(DrawableFillOpacity(DEFAULT_TRANSPARENCY))
             for point_index, data_point in enumerate(data_row['values']):
                 # Using the original calcs from the stacked bar chart
                 # to get the difference between

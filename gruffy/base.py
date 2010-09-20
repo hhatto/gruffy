@@ -10,6 +10,7 @@ LEGEND_MARGIN = TITLE_MARGIN = 20.0
 LABEL_MARGIN = 10.0
 DEFAULT_MARGIN = 20.0
 
+DEFAULT_TRANSPARENCY = 0.7
 DEFAULT_TARGET_WIDTH = 800
 DEFAULT_FONT = "Vera.ttf"
 
@@ -43,6 +44,7 @@ class Base(object):
         self.labels = {}
         self.labels_seen = {}
         self.sort = True
+        self.transparent = False
         self.title = None
 
         self.scale = self.columns / self.raw_columns

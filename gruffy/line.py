@@ -50,6 +50,10 @@ class Line(Base):
                 # Reset each time to avoid thin-line errors
                 dl.append(DrawableStrokeColor(Color(data_row['color'])))
                 dl.append(DrawableFillColor(Color(data_row['color'])))
+                if type(self.transparent) is float:
+                    dl.append(DrawableFillOpacity(self.transparent))
+                elif self.transparent is True:
+                    dl.append(DrawableFillOpacity(DEFAULT_TRANSPARENCY))
                 dl.append(DrawableStrokeOpacity(1.0))
                 dl.append(DrawableStrokeWidth(self.line_width or \
                         self.clip_value_if_greater_than(self.columns / \

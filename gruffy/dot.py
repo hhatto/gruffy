@@ -34,6 +34,10 @@ class Dot(Base):
                                            self.graph_left + self.graph_width,
                                            y_pos))
                 dl.append(DrawableFillColor(Color(data_row['color'])))
+                if type(self.transparent) is float:
+                    dl.append(DrawableFillOpacity(self.transparent))
+                elif self.transparent is True:
+                    dl.append(DrawableFillOpacity(DEFAULT_TRANSPARENCY))
                 dl.append(DrawableStrokeColor('transparent'))
                 dl.append(DrawableCircle(x_pos, y_pos,
                                          x_pos + round(float(self.item_width) / 3.0),

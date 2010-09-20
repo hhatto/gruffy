@@ -14,6 +14,10 @@ class Area(Base):
             poly_points = CoordinateList()
             prev_x = prev_y = 0.0
             dl.append(DrawableFillColor(Color(data_row['color'])))
+            if type(self.transparent) is float:
+                dl.append(DrawableFillOpacity(self.transparent))
+            elif self.transparent is True:
+                dl.append(DrawableFillOpacity(DEFAULT_TRANSPARENCY))
 
             for index, data_point in enumerate(data_row['values']):
                 # Use incremented x and scaled y
