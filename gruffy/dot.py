@@ -22,7 +22,7 @@ class Dot(Base):
         padding = (self.items_width * (1 - spacing_factor)) / 2
 
         for row_index, data_row in enumerate(self.norm_data):
-            for point_index, data_point in enumerate(data_row[DATA_VALUES_INDEX]):
+            for point_index, data_point in enumerate(data_row['values']):
                 x_pos = self.graph_left + (data_point * self.graph_width) - \
                         round(float(self.item_width) / 6.0)
                 y_pos = self.graph_top + (self.items_width * point_index) + \
@@ -32,7 +32,7 @@ class Dot(Base):
                     dl.append(DrawableStrokeWidth(1.0))
                     dl.append(DrawableStrokeOpacity(0.1))
                     dl.append(DrawableLine(self.graph_left, y_pos, self.graph_left + self.graph_width, y_pos))
-                dl.append(DrawableFillColor(Color(data_row[DATA_COLOR_INDEX])))
+                dl.append(DrawableFillColor(Color(data_row['color'])))
                 dl.append(DrawableStrokeColor('transparent'))
                 dl.append(DrawableCircle(x_pos, y_pos, x_pos + \
                                          round(float(self.item_width)/3.0), y_pos))

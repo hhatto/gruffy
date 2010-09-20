@@ -24,8 +24,8 @@ class SideBar(Base):
         padding = (self.bar_width * (1 - self.bar_spacing)) / 2
 
         for row_index, data_row in enumerate(self.norm_data):
-            dl.append(DrawableFillColor(Color(data_row[DATA_COLOR_INDEX])))
-            for point_index, data_point in enumerate(data_row[DATA_VALUES_INDEX]):
+            dl.append(DrawableFillColor(Color(data_row['color'])))
+            for point_index, data_point in enumerate(data_row['values']):
                 # Using the original calcs from the stacked bar chart
                 # to get the difference between
                 # part of the bart chart we wish to stack.

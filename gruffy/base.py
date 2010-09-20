@@ -5,11 +5,6 @@ from pgmagick import *
 # Draw extra lines showing where the margins and text centers are
 DEBUG = False
 
-# Used for navigating the array of data to plot
-DATA_LABEL_INDEX = 0
-DATA_VALUES_INDEX = 1
-DATA_COLOR_INDEX = 2
-
 # Space around text elements. Mostly used for vertical spacing
 LEGEND_MARGIN = TITLE_MARGIN = 20.0
 LABEL_MARGIN = 10.0
@@ -181,7 +176,9 @@ class Base(object):
 
     def data(self, name, data_points=[], color=None):
         data_points = list(data_points)
-        self.gdata.append([name, data_points, (color or self.increment_color())])
+        self.gdata.append({'label': name,
+                           'values': data_points,
+                           'color': color or self.increment_color()})
         self.column_count = len(data_points) if len(data_points) > self.column_count else self.column_count
         for cnt, data_point in enumerate(data_points):
             if data_points is None:
@@ -324,8 +321,8 @@ class Base(object):
 
     def sort_norm_data(self):
         def normcompare(a, b):
-            a_sum = sum(a[DATA_VALUES_INDEX])
-            b_sum = sum(b[DATA_VALUES_INDEX])
+            a_sum = sum(a['values'])
+            b_sum = sum(b['values'])
             if a_sum > b_sum:
                 return 1
             elif a_sum < b_sum:
@@ -381,7 +378,7 @@ class Base(object):
     def draw_legend(self):
         if self.hide_legend:
             return
-        self.legend_labels = [gdata[DATA_LABEL_INDEX] for gdata in self.gdata]
+        self.legend_labels = [gdata['label'] for gdata in self.gdata]
         legend_square_width = self.legend_box_size
 
         dl = DrawableList()
@@ -407,7 +404,7 @@ class Base(object):
         dl.append(DrawableStrokeColor('transparent'))
         for index, legend_label in enumerate(self.legend_labels):
             # Now draw box with color of this dataset
-            dl.append(DrawableFillColor(Color(self.gdata[index][DATA_COLOR_INDEX])))
+            dl.append(DrawableFillColor(Color(self.gdata[index]['color'])))
             dl.append(DrawableRectangle(current_x_offset,
                                         current_y_offset - legend_square_width / 2.0,
                                         current_x_offset + legend_square_width,
@@ -485,15 +482,15 @@ class Base(object):
 
             for data_row in self.gdata:
                 norm_data_points = []
-                for data_point in data_row[DATA_VALUES_INDEX]:
+                for data_point in data_row['values']:
                     if data_point is None:
                         norm_data_points.append(None)
                     else:
                         norm_data_points.append(((float(data_point) - \
                                 float(self.minimum_value)) / self.spread))
-                self.norm_data.append([data_row[DATA_LABEL_INDEX],
-                                       norm_data_points,
-                                       data_row[DATA_COLOR_INDEX]])
+                self.norm_data.append({'label': data_row['label'],
+                                       'values': norm_data_points,
+                                       'color': data_row['color']})
 
     def calculate_spread(self):
         self.spread = float(self.maximum_value) - float(self.minimum_value)

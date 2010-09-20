@@ -41,14 +41,14 @@ class Bar(Base):
                 conversion.zero = -self.minimum_value / self.spread
 
         for row_index, data_row in enumerate(self.norm_data):
-            for point_index, data_point in enumerate(data_row[DATA_VALUES_INDEX]):
+            for point_index, data_point in enumerate(data_row['values']):
                 left_x = self.graph_left + (self.bar_width * \
                              (row_index + point_index + \
                              ((len(self.gdata) - 1) * point_index))) + padding
                 right_x = left_x + self.bar_width * self.bar_spacing
                 conv = conversion.getLeftYRightYscaled(data_point)
 
-                dl.append(DrawableFillColor(Color(data_row[DATA_COLOR_INDEX])))
+                dl.append(DrawableFillColor(Color(data_row['color'])))
                 dl.append(DrawableRectangle(left_x, conv[0], right_x, conv[1]))
 
                 label_center = self.graph_left + \

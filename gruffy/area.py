@@ -13,9 +13,9 @@ class Area(Base):
         for data_row in self.norm_data:
             poly_points = CoordinateList()
             prev_x = prev_y = 0.0
-            dl.append(DrawableFillColor(Color(data_row[DATA_COLOR_INDEX])))
+            dl.append(DrawableFillColor(Color(data_row['color'])))
 
-            for index, data_point in enumerate(data_row[DATA_VALUES_INDEX]):
+            for index, data_point in enumerate(data_row['values']):
                 # Use incremented x and scaled y
                 new_x = self.graph_left + (self.x_increment * index)
                 new_y = self.graph_top + \

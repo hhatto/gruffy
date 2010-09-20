@@ -29,8 +29,8 @@ class Pie(Base):
 
         # Use full data since we can easily calculate percentages
         def percentages_compare(a, b):
-            a = a[DATA_VALUES_INDEX][0]
-            b = b[DATA_VALUES_INDEX][0]
+            a = a['values'][0]
+            b = b['values'][0]
             if a > b:
                 return 1
             elif a < b:
@@ -40,14 +40,14 @@ class Pie(Base):
 
         dl = DrawableList()
         for data_row in self.gdata:
-            if data_row[DATA_VALUES_INDEX][0] > 0:
-                dl.append(DrawableStrokeColor(data_row[DATA_COLOR_INDEX]))
+            if data_row['values'][0] > 0:
+                dl.append(DrawableStrokeColor(data_row['color']))
                 dl.append(DrawableFillColor('transparent'))
                 # stroke width should be equal to radius.
                 # we'll draw centered on (radius / 2)
                 dl.append(DrawableStrokeWidth(radius))
 
-                current_degrees = (float(data_row[DATA_VALUES_INDEX][0]) \
+                current_degrees = (float(data_row['values'][0]) \
                                     / total_sum) * 360.0
 
                 # ellipse will draw the the stroke centered on
@@ -63,7 +63,7 @@ class Pie(Base):
                 half_angle = prev_degrees + \
                         ((prev_degrees + current_degrees) - prev_degrees) / 2
 
-                label_val = round(float(data_row[DATA_VALUES_INDEX][0]) / \
+                label_val = round(float(data_row['values'][0]) / \
                                   total_sum * 100.0)
                 if not (label_val < self.hide_labels_less_than):
                     label_string = str(label_val) + '%%'
@@ -105,5 +105,5 @@ class Pie(Base):
         self.base_image.draw(dl)
 
     def sums_for_pie(self):
-        t = [data_row[DATA_VALUES_INDEX][0] for data_row in self.gdata]
+        t = [data_row['values'][0] for data_row in self.gdata]
         return sum(t)

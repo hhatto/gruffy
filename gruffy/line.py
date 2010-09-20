@@ -40,7 +40,7 @@ class Line(Base):
         for data_row in self.norm_data:
             prev_x = prev_y = None
             self.one_point = self.is_contains_one_point_only(data_row)
-            for index, data_point in enumerate(data_row[DATA_VALUES_INDEX]):
+            for index, data_point in enumerate(data_row['values']):
                 new_x = self.graph_left + (self.x_increment * index)
                 if data_point is None:
                     continue
@@ -48,16 +48,16 @@ class Line(Base):
                 new_y = self.graph_top + (self.graph_height - data_point * self.graph_height)
 
                 # Reset each time to avoid thin-line errors
-                dl.append(DrawableStrokeColor(Color(data_row[DATA_COLOR_INDEX])))
-                dl.append(DrawableFillColor(Color(data_row[DATA_COLOR_INDEX])))
+                dl.append(DrawableStrokeColor(Color(data_row['color'])))
+                dl.append(DrawableFillColor(Color(data_row['color'])))
                 dl.append(DrawableStrokeOpacity(1.0))
                 dl.append(DrawableStrokeWidth(self.line_width or \
                         self.clip_value_if_greater_than(self.columns / \
-                        (len(self.norm_data[0][DATA_VALUES_INDEX]) * 4), 5.0)))
+                        (len(self.norm_data[0]['values']) * 4), 5.0)))
 
                 circle_radius = self.dot_radius or \
                         self.clip_value_if_greater_than(self.columns / \
-                        (len(self.norm_data[0][DATA_VALUES_INDEX]) * 2.5), 5.0)
+                        (len(self.norm_data[0]['values']) * 2.5), 5.0)
 
                 if not self.hide_lines and prev_x and prev_y:
                     dl.append(DrawableLine(prev_x, prev_y, new_x, new_y))
@@ -83,7 +83,7 @@ class Line(Base):
     def is_contains_one_point_only(self, data_row):
         # Spin through data to determine if there is just one_value present.
         one_point = False
-        for data_point in data_row[DATA_VALUES_INDEX]:
+        for data_point in data_row['values']:
             if data_point:
                 if one_point:
                     # more than one point, bail
