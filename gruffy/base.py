@@ -145,11 +145,14 @@ class Base(object):
 
     def render_background(self):
         if type(self.theme_options['background_colors']) is list:
-            self.base_image = self.render_gradiated_background(self.theme_options['background_colors'])
+            colors = self.theme_options['background_colors']
+            self.base_image = self.render_gradiated_background(colors)
         elif type(self.theme_options['background_colors']) is str:
-            self.base_image = self.render_solid_background(self.theme_options['background_colors'])
+            colors = self.theme_options['background_colors']
+            self.base_image = self.render_solid_background(colors)
         else:
-            self.base_image = self.render_image_background(self.theme_options['background_image'])
+            image = self.theme_options['background_image']
+            self.base_image = self.render_image_background(image)
 
     def theme(self, options):
         self.reset_themes()
