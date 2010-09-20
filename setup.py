@@ -20,7 +20,7 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python',
         'Topic :: Multimedia :: Graphics'],
-    keywords="graph visualize",
+    keywords="chart graph visualize",
     install_requires=['pgmagick'],
     packages=['gruffy'],
     zip_safe=False,
