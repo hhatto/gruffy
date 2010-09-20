@@ -38,7 +38,7 @@ class SideBar(Base):
                 left_y = self.graph_top + (self.bars_width * point_index) + \
                          (self.bar_width * row_index) + padding
                 right_x = left_x + difference
-                right_y = left_y + self.bar_width * self.bar_spacing
+                right_y = left_y + self.bar_width
                 height[point_index] += (data_point * self.graph_width)
                 dl.append(DrawableRectangle(left_x, left_y, right_x, right_y))
 
