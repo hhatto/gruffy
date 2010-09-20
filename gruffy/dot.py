@@ -17,8 +17,6 @@ class Dot(Base):
 
         dl = DrawableList()
         dl.append(DrawableStrokeOpacity(0.0))
-        height = [0 for i in range(self.column_count)]
-        length = [self.graph_left for i in range(self.column_count)]
         padding = (self.items_width * (1 - spacing_factor)) / 2
 
         for row_index, data_row in enumerate(self.norm_data):
@@ -31,13 +29,18 @@ class Dot(Base):
                     dl.append(DrawableStrokeColor(Color(self.marker_color)))
                     dl.append(DrawableStrokeWidth(1.0))
                     dl.append(DrawableStrokeOpacity(0.1))
-                    dl.append(DrawableLine(self.graph_left, y_pos, self.graph_left + self.graph_width, y_pos))
+                    dl.append(DrawableLine(self.graph_left,
+                                           y_pos,
+                                           self.graph_left + self.graph_width,
+                                           y_pos))
                 dl.append(DrawableFillColor(Color(data_row['color'])))
                 dl.append(DrawableStrokeColor('transparent'))
-                dl.append(DrawableCircle(x_pos, y_pos, x_pos + \
-                                         round(float(self.item_width)/3.0), y_pos))
+                dl.append(DrawableCircle(x_pos, y_pos,
+                                         x_pos + round(float(self.item_width) / 3.0),
+                                         y_pos))
                 # Calculate center based on item_width and current row
-                label_center = self.graph_top + (self.items_width * point_index + self.items_width / 2) + padding
+                label_center = self.graph_top + \
+                        (self.items_width * point_index + self.items_width / 2) + padding
                 self.draw_label(label_center, point_index)
         self.base_image.draw(dl)
 
@@ -57,7 +60,8 @@ class Dot(Base):
         for index in range(number_of_lines + 1):
             line_diff = (self.graph_right - self.graph_left) / number_of_lines
             x = self.graph_right - (line_diff * index) - 1
-            dl.append(DrawableLine(x, self.graph_bottom, x, self.graph_bottom + 0.5 * LABEL_MARGIN))
+            dl.append(DrawableLine(x, self.graph_bottom,
+                                   x, self.graph_bottom + 0.5 * LABEL_MARGIN))
             diff = index - number_of_lines
             marker_label = abs(diff) * increment
 
