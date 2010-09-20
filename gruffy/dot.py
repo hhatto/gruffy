@@ -2,6 +2,7 @@ from gruffy.base import *
 
 
 class Dot(Base):
+    """Dot Graph Class"""
 
     def draw(self):
         self.has_left_labels = True
@@ -39,12 +40,11 @@ class Dot(Base):
                 elif self.transparent is True:
                     dl.append(DrawableFillOpacity(DEFAULT_TRANSPARENCY))
                 dl.append(DrawableStrokeColor('transparent'))
-                dl.append(DrawableCircle(x_pos, y_pos,
-                                         x_pos + round(float(self.item_width) / 3.0),
-                                         y_pos))
+                dl.append(DrawableCircle(x_pos,
+                    y_pos, x_pos + round(float(self.item_width) / 3.0), y_pos))
                 # Calculate center based on item_width and current row
-                label_center = self.graph_top + \
-                        (self.items_width * point_index + self.items_width / 2) + padding
+                label_center = self.graph_top + (self.items_width * \
+                        point_index + self.items_width / 2) + padding
                 self.draw_label(label_center, point_index)
         self.base_image.draw(dl)
 
@@ -59,7 +59,8 @@ class Dot(Base):
         dl.append(DrawableStrokeWidth(1))
         number_of_lines = 5
 
-        # TODO Round maximum marker value to a round number like 100, 0.1, 0.5, etc.
+        # TODO Round maximum marker value to a round number like
+        # 100, 0.1, 0.5, etc.
         increment = self.significant(float(self.maximum_value) / number_of_lines)
         for index in range(number_of_lines + 1):
             line_diff = (self.graph_right - self.graph_left) / number_of_lines
@@ -87,7 +88,7 @@ class Dot(Base):
         self.base_image.draw(dl)
 
     def draw_label(self, y_offset, index):
-        if self.labels.has_key(index) and not self.labels_seen.has_key(index):
+        if index in self.labels and index not in self.labels_seen:
             dl = DrawableList()
             dl.append(DrawableFillColor(Color(self.font_color)))
             font = self.font if self.font else DEFAULT_FONT

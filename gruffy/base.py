@@ -2,9 +2,6 @@ import math
 import os
 from pgmagick import *
 
-# Draw extra lines showing where the margins and text centers are
-DEBUG = False
-
 # Space around text elements. Mostly used for vertical spacing
 LEGEND_MARGIN = TITLE_MARGIN = 20.0
 LABEL_MARGIN = 10.0
@@ -18,6 +15,7 @@ THOUSAND_SEPARATOR = ','
 
 
 class Base(object):
+    """Graph Base Class"""
 
     def __init__(self, target_width=DEFAULT_TARGET_WIDTH):
         if type(target_width) is not int:
@@ -91,9 +89,6 @@ class Base(object):
         self.color_index = 0
         self.labels_seen = {}
         self.theme_options = {}
-        #self.d = Image()
-        # Scale down from 800x600 used to calculate drawing.
-        #self.d.transformScale(self.scale, self.scale)
 
     def theme_keynote(self):
         # Colors
@@ -137,14 +132,6 @@ class Base(object):
                     'font_color': 'black',
                     'background_colors': 'white'})
 
-    def render_gradiated_background(self, top_color, bottom_color):
-        # TODO: porting GradientFill
-        return Image(Geometry(int(self.columns), int(self.rows)),
-                     Color('gradient:black-white'))
-
-    def render_solid_background(self, color):
-        return Image(Geometry(int(self.columns), int(self.rows)), color)
-
     def render_background(self):
         if type(self.theme_options['background_colors']) is list:
             colors = self.theme_options['background_colors']
@@ -155,6 +142,22 @@ class Base(object):
         else:
             image = self.theme_options['background_image']
             self.base_image = self.render_image_background(image)
+
+    def render_solid_background(self, color):
+        return Image(Geometry(int(self.columns), int(self.rows)), color)
+
+    def render_gradiated_background(self, top_color, bottom_color):
+        # TODO: porting GradientFill
+        return Image(Geometry(int(self.columns), int(self.rows)),
+                     Color('gradient:black-white'))
+
+    def render_image_background(self, image_path, opacity=True):
+        image = Image(image_path)
+        if type(opacity) is int:
+            image.opacity(opacity)
+        elif opacity is True:
+            image.opacity(50)
+        return image
 
     def theme(self, options):
         self.reset_themes()
@@ -184,14 +187,14 @@ class Base(object):
         self.gdata.append({'label': name,
                            'values': data_points,
                            'color': color or self.increment_color()})
-        self.column_count = len(data_points) if len(data_points) > self.column_count else self.column_count
+        if len(data_points) > self.column_count:
+            self.column_count = len(data_points)
         for cnt, data_point in enumerate(data_points):
             if data_points is None:
                 continue
             if self.maximum_value is None and self.minimum_value is None:
                 self.maximum_value = self.minimum_value = data_point
             # TODO Doesn't work with stacked bar graphs
-            # Original:@maximum_value = larger_than_max?(data_point, index) ? max(data_point, index) : @maximum_value
             if self.larger_than_max(data_point):
                 self.maximum_value = data_point
             if self.maximum_value >= 0:
@@ -221,7 +224,10 @@ class Base(object):
                         self.marker_count = lines
                         break
                 self.marker_count = self.marker_count or 4
-            self.increment = self.significant(self.spread / self.marker_count) if (self.spread > 0) else 1
+            if self.spread > 0:
+                self.increment = self.significant(self.spread / self.marker_count)
+            else:
+                self.increment = 1
         else:
             # TODO Make this work for negative values
             self.maximum_value = [self.maximum_value.ceil, self.y_axis_increment].max
@@ -235,7 +241,7 @@ class Base(object):
 
         # Draw horizontal line markers and annotate with numbers
         dl = DrawableList()
-        for index in range(self.marker_count+1):
+        for index in range(self.marker_count + 1):
             y = self.graph_top + self.graph_height - float(index) * self.increment_scaled
 
             dl.append(DrawableFillColor(Color(self.marker_color)))
@@ -263,7 +269,7 @@ class Base(object):
     def draw_label(self, x_offset, index):
         if self.hide_line_markers:
             return
-        if self.labels.has_key(index) and not self.labels_seen.has_key(index):
+        if index in self.labels and index not in self.labels_seen:
             y_offset = self.graph_bottom + LABEL_MARGIN
 
             dl = DrawableList()
@@ -574,7 +580,10 @@ class Base(object):
             else:
                 line_number_width = longest_left_label_width + LABEL_MARGIN * 2
 
-            tmp = 0.0 if self.y_axis_label is None else self.marker_caps_height + LABEL_MARGIN * 2
+            if self.y_axis_label is None:
+                tmp = 0.0
+            else:
+                tmp = self.marker_caps_height + LABEL_MARGIN * 2
             self.graph_left = self.left_margin + line_number_width + tmp
 
             # Make space for half the width of the rightmost column label.
@@ -585,7 +594,13 @@ class Base(object):
                 last_label = int(tmp[-1])
             else:
                 last_label = 0
-            extra_room_for_long_label = self.calculate_width(self.marker_font_size, self.labels[last_label]) / 2.0 if (last_label >= (self.column_count-1) and self.center_labels_over_point) else 0
+            if last_label >= (self.column_count - 1) and \
+               self.center_labels_over_point:
+                extra_room_for_long_label = \
+                        self.calculate_width(self.marker_font_size,
+                                             self.labels[last_label])
+            else:
+                extra_room_for_long_label = 0
             self.graph_right_margin = self.right_margin + extra_room_for_long_label
 
             self.graph_bottom_margin = self.bottom_margin + self.marker_caps_height + LABEL_MARGIN
@@ -595,11 +610,20 @@ class Base(object):
 
         # When self.hide title, leave a title_margin space for aesthetics.
         # Same with self.hide_legend
-        tmp = self.title_margin if self.hide_title else self.title_caps_height  + self.title_margin
-        tmp += self.legend_margin if self.hide_legend else self.legend_caps_height + self.legend_margin
+        if self.hide_title:
+            tmp = self.title_margin
+        else:
+            tmp = self.title_caps_height + self.title_margin
+        if self.hide_legend:
+            tmp += self.legend_margin
+        else:
+            tmp += self.legend_caps_height + self.legend_margin
         self.graph_top = self.top_margin + tmp
 
-        x_axis_label_height = 0.0 if self.x_axis_label is None else self.marker_caps_height + LABEL_MARGIN
+        if self.x_axis_label is None:
+            x_axis_label_height = 0.0
+        else:
+            x_axis_label_height = self.marker_caps_height + LABEL_MARGIN
         self.graph_bottom = self.raw_rows - self.graph_bottom_margin - x_axis_label_height
         self.graph_height = self.graph_bottom - self.graph_top
 

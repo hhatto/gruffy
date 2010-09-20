@@ -2,6 +2,7 @@ from gruffy.base import *
 
 
 class SideBar(Base):
+    """Side Bar Graph Class"""
 
     bar_spacing = None
 
@@ -93,7 +94,7 @@ class SideBar(Base):
         self.base_image.draw(dl)
 
     def draw_label(self, y_offset, index):
-        if self.labels.has_key(index) and not self.labels_seen.has_key(index):
+        if index in self.labels and index not in self.labels_seen:
             dl = DrawableList()
             dl.append(DrawableFillColor(self.font_color))
             font = self.font if self.font else DEFAULT_FONT

@@ -2,12 +2,14 @@ from gruffy.base import *
 
 
 class Area(Base):
+    """Area Graph Class"""
 
     def draw(self):
+        """override to draw() method in Base Class."""
         Area.__base__.draw(self)
         if not self.has_gdata:
             return
-        self.x_increment = self.graph_width / float(self.column_count - 1)
+        x_increment = self.graph_width / float(self.column_count - 1)
         dl = DrawableList()
         dl.append(DrawableStrokeColor(Color('transparent')))
         for data_row in self.norm_data:
@@ -21,7 +23,7 @@ class Area(Base):
 
             for index, data_point in enumerate(data_row['values']):
                 # Use incremented x and scaled y
-                new_x = self.graph_left + (self.x_increment * index)
+                new_x = self.graph_left + (x_increment * index)
                 new_y = self.graph_top + \
                         (self.graph_height - data_point * self.graph_height)
                 if prev_x > 0 and prev_y > 0:

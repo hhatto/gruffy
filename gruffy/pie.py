@@ -8,6 +8,7 @@ def deg2rad(angle):
 
 
 class Pie(Base):
+    """Pie Graph Class"""
 
     def initialize_ivars(self):
         Pie.__base__.initialize_ivars(self)
@@ -27,13 +28,11 @@ class Pie(Base):
         total_sum = self.sums_for_pie()
         prev_degrees = self.zero_degree
 
-        # Use full data since we can easily calculate percentages
-        def percentages_compare(a, b):
-            a = a['values'][0]
-            b = b['values'][0]
-            if a > b:
+        def percentages_compare(comp_a, comp_b):
+            """Use full data since we can easily calculate percentages"""
+            if comp_a['values'][0] > comp_b['values'][0]:
                 return 1
-            elif a < b:
+            elif comp_a['values'][0] < comp_b['values'][0]:
                 return -1
             return 0
         self.gdata.sort(percentages_compare)
@@ -105,5 +104,5 @@ class Pie(Base):
         self.base_image.draw(dl)
 
     def sums_for_pie(self):
-        t = [data_row['values'][0] for data_row in self.gdata]
-        return sum(t)
+        """collect data values"""
+        return sum([data_row['values'][0] for data_row in self.gdata])

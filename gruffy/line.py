@@ -2,6 +2,7 @@ from gruffy.base import *
 
 
 class Line(Base):
+    """Line Graph Class"""
 
     line_width = None
     dot_radius = None
@@ -22,18 +23,20 @@ class Line(Base):
         if not self.has_gdata:
             return
         if self.column_count > 1:
-            self.x_increment = float(self.graph_width / (self.column_count - 1))
+            x_increment = float(self.graph_width / (self.column_count - 1))
         else:
-            self.x_increment = self.graph_width
+            x_increment = self.graph_width
 
         dl = DrawableList()
         if hasattr(self, "norm_baseline"):
-            level = self.graph_top + (self.graph_height - self.norm_baseline * self.graph_height)
+            level = self.graph_top + (self.graph_height - \
+                    self.norm_baseline * self.graph_height)
             dl.append(DrawableStrokeColor(Color(self.baseline_color)))
             dl.append(DrawableFillOpacity(0.0))
             dl.append(DrawableStrokeDasharray(10, 20))
             dl.append(DrawableStrokeWidth(5))
-            dl.append(DrawableLine(self.graph_left, level, self.graph_left + self.graph_width, level))
+            dl.append(DrawableLine(self.graph_left,
+                level, self.graph_left + self.graph_width, level))
             self.base_image.draw(dl)
             del(dl)
 
@@ -41,11 +44,12 @@ class Line(Base):
             prev_x = prev_y = None
             self.one_point = self.is_contains_one_point_only(data_row)
             for index, data_point in enumerate(data_row['values']):
-                new_x = self.graph_left + (self.x_increment * index)
+                new_x = self.graph_left + (x_increment * index)
                 if data_point is None:
                     continue
                 self.draw_label(new_x, index)
-                new_y = self.graph_top + (self.graph_height - data_point * self.graph_height)
+                new_y = self.graph_top + (self.graph_height - \
+                        data_point * self.graph_height)
 
                 # Reset each time to avoid thin-line errors
                 dl.append(DrawableStrokeColor(Color(data_row['color'])))
@@ -66,9 +70,11 @@ class Line(Base):
                 if not self.hide_lines and prev_x and prev_y:
                     dl.append(DrawableLine(prev_x, prev_y, new_x, new_y))
                 elif self.one_point:
-                    dl.append(DrawableCircle(new_x, new_y, new_x - circle_radius, new_y))
+                    dl.append(DrawableCircle(new_x, new_y,
+                                             new_x - circle_radius, new_y))
                 if not self.hide_dots:
-                    dl.append(DrawableCircle(new_x, new_y, new_x - circle_radius, new_y))
+                    dl.append(DrawableCircle(new_x, new_y,
+                                             new_x - circle_radius, new_y))
 
                 prev_x = new_x
                 prev_y = new_y
@@ -82,7 +88,8 @@ class Line(Base):
         self.maximum_value = max([float(self.maximum_value), tmp])
         Line.__base__.normalize(self)
         if self.baseline_value:
-            self.norm_baseline = (float(self.baseline_value) / float(self.maximum_value))
+            self.norm_baseline = (float(self.baseline_value) / \
+                                  float(self.maximum_value))
 
     def is_contains_one_point_only(self, data_row):
         # Spin through data to determine if there is just one_value present.
