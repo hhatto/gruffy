@@ -150,11 +150,11 @@ class Base(object):
 
     def render_background(self):
         if type(self.theme_options['background_colors']) is list:
-            self.base_image = self.render_gradiated_background(*self.theme_options['background_colors'])
+            self.base_image = self.render_gradiated_background(self.theme_options['background_colors'])
         elif type(self.theme_options['background_colors']) is str:
             self.base_image = self.render_solid_background(self.theme_options['background_colors'])
         else:
-            self.base_image = self.render_image_background(*self.theme_options['background_image'])
+            self.base_image = self.render_image_background(self.theme_options['background_image'])
 
     def theme(self, options):
         self.reset_themes()
@@ -255,30 +255,6 @@ class Base(object):
                 y = y + self.calculate_caps_height(self.scale_fontsize(self.marker_font_size)) / 3
                 dl.append(DrawableText(self.graph_left - LABEL_MARGIN - x,
                                        y, self.label(marker_label)))
-
-        # # Submitted by a contibutor...the utility escapes me
-        # i = 0
-        # self.additional_line_values.each do |value|
-        #   self.increment_scaled = self.graph_height.to_f / (self.maximum_value.to_f / value)
-        #
-        #   y = self.graph_top + self.graph_height - self.increment_scaled
-        #
-        #   self.d = self.d.stroke(self.additional_line_colors[i])
-        #   self.d = self.d.line(self.graph_left, y, self.graph_right, y)
-        #
-        #
-        #   self.d.fill = self.additional_line_colors[i]
-        #   self.d.font = self.font if self.font
-        #   self.d.stroke('transparent')
-        #   self.d.pointsize = scale_fontsize(self.marker_font_size)
-        #   self.d.gravity = EastGravity
-        #   self.d = self.d.annotate_scaled( self.base_image,
-        #                     100, 20,
-        #                     -10, y - (self.marker_font_size/2.0),
-        #                     "", self.scale)
-        #   i += 1
-        # end
-
         dl.append(DrawableStrokeAntialias(True))
         self.base_image.draw(dl)
 
@@ -370,7 +346,6 @@ class Base(object):
             x_axis_label_y_coordinate = self.graph_bottom + \
                     LABEL_MARGIN * 2 + self.marker_caps_height
 
-            # TODO Center between graph area
             dl.append(DrawableFillColor(Color(self.font_color)))
             font = self.font if self.font else DEFAULT_FONT
             dl.append(DrawableFont(font, StyleType.NormalStyle, 400,
@@ -378,6 +353,10 @@ class Base(object):
             dl.append(DrawableStrokeColor('transparent'))
             dl.append(DrawablePointSize(self.scale_fontsize(self.marker_font_size)))
             dl.append(DrawableGravity(GravityType.NorthGravity))
+            # graph center
+            #dl.append(DrawableText(self.graph_left / 2.0,
+            #                       x_axis_label_y_coordinate,
+            #                       self.x_axis_label))
             dl.append(DrawableText(0.0, x_axis_label_y_coordinate,
                                    self.x_axis_label))
             self.base_image.draw(dl)

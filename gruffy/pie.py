@@ -19,9 +19,9 @@ class Pie(Base):
         Pie.__base__.draw(self)
         if not self.has_gdata:
             return
-        diameter = self.graph_height
         radius = (min([self.graph_width, self.graph_height]) / 2.0) * 0.8
-        top_x = self.graph_left + (self.graph_width - diameter) / 2.0
+        #diameter = self.graph_height
+        #top_x = self.graph_left + (self.graph_width - diameter) / 2.0
         center_x = self.graph_left + (self.graph_width / 2.0)
         center_y = self.graph_top + (self.graph_height / 2.0) - 10
         total_sum = self.sums_for_pie()
@@ -71,15 +71,14 @@ class Pie(Base):
                                     radius + (radius * TEXT_OFFSET_PERCENTAGE),
                                     label_string)
                 prev_degrees += current_degrees
-
         # TODO debug a circle where the text is drawn...
-
         self.base_image.draw(dl)
 
-    ##
-    # Labels are drawn around a slightly wider ellipse to give room for
-    # labels on the left and right.
     def draw_label(self, center_x, center_y, angle, radius, amount):
+        """
+        Labels are drawn around a slightly wider ellipse to give room for
+        labels on the left and right.
+        """
         dl = DrawableList()
         # TODO Don't use so many hard-coded numbers
         # The distance out from the center of the pie to get point
@@ -106,7 +105,5 @@ class Pie(Base):
         self.base_image.draw(dl)
 
     def sums_for_pie(self):
-        total_sum = 0.0
         t = [data_row[DATA_VALUES_INDEX][0] for data_row in self.gdata]
-        total_sum = sum(t)
-        return total_sum
+        return sum(t)
