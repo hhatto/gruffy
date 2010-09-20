@@ -2,12 +2,13 @@ all: test
 
 .PHONY: test
 test:
-	python test/test_base.py
 	python test/test_area.py
 	python test/test_bar.py
+	python test/test_base.py
 	python test/test_dot.py
-	python test/test_side_bar.py
 	python test/test_line.py
+	python test/test_pie.py
+	python test/test_side_bar.py
 	rm graph.png
 
 pypireg:
