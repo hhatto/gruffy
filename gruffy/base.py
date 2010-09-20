@@ -190,10 +190,12 @@ class Base(object):
                 self.maximum_value = self.minimum_value = data_point
             # TODO Doesn't work with stacked bar graphs
             # Original:@maximum_value = larger_than_max?(data_point, index) ? max(data_point, index) : @maximum_value
-            if data_point > self.maximum_value:
+            if self.larger_than_max(data_point):
                 self.maximum_value = data_point
             if self.maximum_value >= 0:
                 self.has_gdata = True
+            if self.less_than_min(data_point):
+                self.minimum_value = data_point
             if self.minimum_value < 0:
                 self.has_gdata = True
 
@@ -321,6 +323,12 @@ class Base(object):
 
     def clip_value_if_greater_than(self, value, max_value):
         return max_value if value > max_value else value
+
+    def larger_than_max(self, data_point):
+        return True if data_point > self.maximum_value else False
+
+    def less_than_min(self, data_point):
+        return True if data_point < self.minimum_value else False
 
     def significant(self, inc):
         if inc == 0:
@@ -453,6 +461,27 @@ class Base(object):
         self.draw_axis_labels()
         self.draw_title()
 
+    # Make copy of data with values scaled between 0-100
+    def normalize(self, force=False):
+        if (self.norm_data is None) or force:
+            self.norm_data = []
+            if not self.has_gdata:
+                return
+
+            self.calculate_spread()
+
+            for data_row in self.gdata:
+                norm_data_points = []
+                for data_point in data_row[DATA_VALUES_INDEX]:
+                    if data_point is None:
+                        norm_data_points.append(None)
+                    else:
+                        norm_data_points.append(((float(data_point) - \
+                                float(self.minimum_value)) / self.spread))
+                self.norm_data.append([data_row[DATA_LABEL_INDEX],
+                                       norm_data_points,
+                                       data_row[DATA_COLOR_INDEX]])
+
     def calculate_spread(self):
         self.spread = float(self.maximum_value) - float(self.minimum_value)
         if self.spread <= 0:
@@ -559,29 +588,10 @@ class Base(object):
         self.graph_bottom = self.raw_rows - self.graph_bottom_margin - x_axis_label_height
         self.graph_height = self.graph_bottom - self.graph_top
 
-    # Make copy of data with values scaled between 0-100
-    def normalize(self, force=False):
-        if (self.norm_data is None) or force:
-            self.norm_data = []
-            if not self.has_gdata:
-                return
-
-            self.calculate_spread()
-
-            for data_row in self.gdata:
-                norm_data_points = []
-                for data_point in data_row[DATA_VALUES_INDEX]:
-                    if data_point is None:
-                        norm_data_points.append(None)
-                    else:
-                        norm_data_points.append(((float(data_point) - float(self.minimum_value)) / self.spread))
-                self.norm_data.append([data_row[DATA_LABEL_INDEX], norm_data_points, data_row[DATA_COLOR_INDEX]])
-
     def draw(self):
-        if self.stacked:
-            make_stacked = self.stacked
-        else:
-            make_stacked = None
+        # TODO: not implement
+        #if self.stacked:
+        #    self.make_stacked()
         self.setup_drawing()
 
     def write(self, filename="graph.png"):
