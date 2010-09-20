@@ -2,14 +2,13 @@ all: test
 
 .PHONY: test
 test:
-	python test/test_area.py
-	python test/test_bar.py
-	python test/test_base.py
-	python test/test_dot.py
-	python test/test_line.py
-	python test/test_pie.py
-	python test/test_side_bar.py
-	rm graph.png
+	cd test && python test_area.py
+	cd test && python test_bar.py
+	cd test && python test_base.py
+	cd test && python test_dot.py
+	cd test && python test_line.py
+	cd test && python test_pie.py
+	cd test && python test_side_bar.py
 
 pypireg:
 	python setup.py register
@@ -18,4 +17,5 @@ pypireg:
 clean:
 	rm -f gruffy/*.pyc
 	rm -f *.png
-	rm -rf build dist
+	rm -rf build dist gruffy.egg-info temp
+	cd test && rm -f gruffy_*.png && cd -
