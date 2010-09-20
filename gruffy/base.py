@@ -395,7 +395,6 @@ class Base(object):
             dl.append(DrawableGravity(GravityType.WestGravity))
             x = -(self.calculate_width(fontsize, self.y_axis_label) / 2.0)
             y = -(self.left_margin + self.marker_caps_height / 2.0)
-            print x, y
             dl.append(DrawableText(x, y, self.y_axis_label))
             dl.append(DrawableRotation(-90))
             self.base_image.draw(dl)
