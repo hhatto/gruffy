@@ -28,7 +28,7 @@ class Base(object):
 
         self.initialize_ivars()
         self.reset_themes()
-        self.theme_pastel()
+        self.theme_keynote()
 
     def initialize_ivars(self):
         """Internal for calculations"""
@@ -91,7 +91,6 @@ class Base(object):
         self.theme_options = {}
 
     def theme_keynote(self):
-        # Colors
         self.blue = '#6886B4'
         self.yellow = '#FDD84E'
         self.green = '#72AE6E'
@@ -102,12 +101,62 @@ class Base(object):
         self.colors = [self.yellow, self.blue, self.green, self.red,
                        self.purple, self.orange, self.white]
 
-        self.theme({
-                'colors': self.colors,
-                'marker_color': 'white',
-                'font_color': 'white',
-                'background_colors': ['black', '#4a465a'],
-        })
+        self.set_theme({'colors': self.colors,
+                        'marker_color': 'white',
+                        'font_color': 'white',
+                        'background_colors': ['black', '#4a465a']})
+
+    def theme_37signals(self):
+        self.green = '#339933'
+        self.purple = '#cc99cc'
+        self.blue = '#336699'
+        self.yellow = '#FFF804'
+        self.red = '#ff0000'
+        self.orange = '#cf5910'
+        self.black = 'black'
+        self.colors = [self.yellow, self.blue, self.green, self.red,
+                       self.purple, self.orange, self.black]
+        self.set_theme({'colors': self.colors,
+                        'marker_color': 'black',
+                        'font_color': 'black',
+                        'background_colors': ['#d1edf5', 'white']})
+
+    def theme_rails_keynote(self):
+        """
+        A color scheme from the colors used on the 2005 Rails keynote
+        presentation at RubyConf.
+        """
+        self.green = '#00ff00'
+        self.grey = '#333333'
+        self.orange = '#ff5d00'
+        self.red = '#f61100'
+        self.white = 'white'
+        self.light_grey = '#999999'
+        self.black = 'black'
+        self.colors = [self.green, self.grey, self.orange, self.red,
+                       self.white, self.light_grey, self.black]
+        self.set_theme({'colors': self.colors,
+                        'marker_color': 'white',
+                        'font_color': 'white',
+                        'background_colors': ['#0083a3', '#0083a3']})
+
+    def theme_odeo(self):
+        """
+        A color scheme similar to that used on the popular podcast site.
+        """
+        self.grey = '#202020'
+        self.white = 'white'
+        self.dark_pink = '#a21764'
+        self.green = '#8ab438'
+        self.light_grey = '#999999'
+        self.dark_blue = '#3a5b87'
+        self.black = 'black'
+        self.colors = [self.grey, self.white, self.dark_blue,
+                       self.dark_pink, self.green, self.light_grey, self.black]
+        self.set_theme({'colors': self.colors,
+                        'marker_color': 'white',
+                        'font_color': 'white',
+                        'background_colors': ['#ff47a4', '#ff1f81']})
 
     def theme_pastel(self):
         self.colors = ['#a9dada',   # blue
@@ -118,24 +167,32 @@ class Base(object):
                        '#daaeda',   # purple
                        '#dadada',   # grey
                       ]
+        self.set_theme({'colors': self.colors,
+                        'marker_color': '#aea9a9',  # Grey
+                        'font_color': 'black',
+                        'background_colors': 'white'})
 
-        self.theme({'colors': self.colors,
-                    'marker_color': '#aea9a9',  # Grey
-                    'font_color': 'black',
-                    'background_colors': 'white'})
+    def theme_django(self):
+        """like a Django"""
+        self.colors = ['#a9dada', '#aedaa9', '#94da3a',
+                       '#487854', '#a9a9da', '#dadada']
+        self.set_theme({'colors': self.colors,
+                        'marker_color': '#ab5603',  # Grey
+                        'font_color': 'white',
+                        'background_colors': ['#092e20', '#234f32']})
 
     def theme_greyscale(self):
         self.colors = ['#282828', '#383838', '#686868',
                        '#989898', '#c8c8c8', '#e8e8e8']
-        self.theme({'colors': self.colors,
-                    'marker_color': '#aea9a9',
-                    'font_color': 'black',
-                    'background_colors': 'white'})
+        self.set_theme({'colors': self.colors,
+                        'marker_color': '#aea9a9',
+                        'font_color': 'black',
+                        'background_colors': 'white'})
 
     def render_background(self):
         if type(self.theme_options['background_colors']) is list:
             colors = self.theme_options['background_colors']
-            self.base_image = self.render_gradiated_background(colors)
+            self.base_image = self.render_gradiated_background(*colors)
         elif type(self.theme_options['background_colors']) is str:
             colors = self.theme_options['background_colors']
             self.base_image = self.render_solid_background(colors)
@@ -147,9 +204,10 @@ class Base(object):
         return Image(Geometry(int(self.columns), int(self.rows)), color)
 
     def render_gradiated_background(self, top_color, bottom_color):
-        # TODO: porting GradientFill
-        return Image(Geometry(int(self.columns), int(self.rows)),
-                     Color('gradient:black-white'))
+        im = Image(Geometry(int(self.columns), int(self.rows)),
+                   Color('transparent'))
+        im.read("gradient:%s-%s" % (top_color, bottom_color))
+        return im
 
     def render_image_background(self, image_path, opacity=True):
         image = Image(image_path)
@@ -159,7 +217,7 @@ class Base(object):
             image.opacity(50)
         return image
 
-    def theme(self, options):
+    def set_theme(self, options):
         self.reset_themes()
 
         defaults = {
@@ -230,7 +288,8 @@ class Base(object):
                 self.increment = 1
         else:
             # TODO Make this work for negative values
-            self.maximum_value = [self.maximum_value.ceil, self.y_axis_increment].max
+            self.maximum_value = max([self.maximum_value.ceil,
+                                      self.y_axis_increment])
             self.minimum_value = math.floor(self.minimum_value)
             self.calculate_spread()
             self.normalize(true)
@@ -397,7 +456,7 @@ class Base(object):
         font = self.font if self.font else DEFAULT_FONT
         dl.append(DrawablePointSize(self.scale_fontsize(self.legend_font_size)))
 
-        label_widths = [[]] # Used to calculate line wrap
+        label_widths = [[]]     # Used to calculate line wrap
         for label in self.legend_labels:
             metrics = TypeMetric()
             self.base_image.fontTypeMetrics(str(label), metrics)
