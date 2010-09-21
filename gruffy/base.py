@@ -49,7 +49,7 @@ class Base(object):
 
         if 'MAGICK_FONT_PATH' in os.environ:
             vera_font_path = os.path.join(os.environ['MAGICK_FONT_PATH'],
-                                          'Vera.ttf')
+                                          DEFAULT_FONT)
         else:
             vera_font_path = 'Vera.ttf'
         self.font = vera_font_path if os.path.exists(vera_font_path) else None
@@ -168,7 +168,7 @@ class Base(object):
                        '#dadada',   # grey
                       ]
         self.set_theme({'colors': self.colors,
-                        'marker_color': '#aea9a9',  # Grey
+                        'marker_color': '#aea9a9',
                         'font_color': 'black',
                         'background_colors': 'white'})
 
@@ -177,7 +177,7 @@ class Base(object):
         self.colors = ['#a9dada', '#aedaa9', '#94da3a',
                        '#487854', '#a9a9da', '#dadada']
         self.set_theme({'colors': self.colors,
-                        'marker_color': '#ab5603',  # Grey
+                        'marker_color': '#ab5603',
                         'font_color': 'white',
                         'background_colors': ['#092e20', '#234f32']})
 
