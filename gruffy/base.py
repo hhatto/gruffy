@@ -314,12 +314,13 @@ class Base(object):
                 dl.append(DrawableFont(font, StyleType.NormalStyle, 400,
                                        StretchType.NormalStretch))
                 dl.append(DrawableStrokeColor('transparent'))
-                dl.append(DrawablePointSize(self.scale_fontsize(self.marker_font_size)))
+                marker_font_size = self.scale_fontsize(self.marker_font_size)
+                dl.append(DrawablePointSize(marker_font_size))
 
                 # Vertically center with 1.0 for the height
                 dl.append(DrawableGravity(GravityType.NorthWestGravity))
                 x = self.calculate_width(self.marker_font_size, marker_label) / 2
-                y = y + self.calculate_caps_height(self.scale_fontsize(self.marker_font_size)) / 3
+                y = y + self.calculate_caps_height(marker_font_size) / 3
                 dl.append(DrawableText(self.graph_left - LABEL_MARGIN - x,
                                        y, self.label(marker_label)))
         dl.append(DrawableStrokeAntialias(True))
