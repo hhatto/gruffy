@@ -89,7 +89,10 @@ class SideBar(Base):
                 # TODO Center text over line
                 x -= text_width / 2
                 y = self.graph_bottom + (LABEL_MARGIN * 2.0)
-                dl.append(DrawableText(x, y, "%.1f" % marker_label))
+                if type(marker_label) is int:
+                    dl.append(DrawableText(x, y, "%d" % marker_label))
+                else:
+                    dl.append(DrawableText(x, y, "%.1f" % marker_label))
             dl.append(DrawableStrokeAntialias(True))
         self.base_image.draw(dl)
 
