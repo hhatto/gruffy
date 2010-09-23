@@ -3,7 +3,7 @@ from gruffy.sidebar import SideBar
 
 
 class StackedSideBar(SideBar, StackedMixin):
-    """Side Stacked Bar Graph Class"""
+    """Stacked Side Bar Graph Object"""
 
     bar_spacing = None
 

@@ -2,7 +2,7 @@ from gruffy.base import *
 
 
 class Line(Base):
-    """Line Graph Class"""
+    """Line Graph Object"""
 
     line_width = None
     dot_radius = None

@@ -1,4 +1,4 @@
-from gruffy.stacked_area import StackedBar
+from gruffy.stacked_bar import StackedBar
 
 g = StackedBar()
 

@@ -2,7 +2,8 @@ from gruffy.base import *
 
 
 class Area(Base):
-    """Area Graph Class"""
+    """Area Graph Object
+    """
 
     def draw(self):
         """override to draw() method in Base Class."""

@@ -15,7 +15,25 @@ THOUSAND_SEPARATOR = ','
 
 
 class Base(object):
-    """Graph Base Class"""
+    """This object is based on all Graph Object.
+    When you create new graph object, override this object::
+
+        from gruffy.base import Base
+
+        class NewGraph(Base):
+            pass
+    """
+
+    #: Title of Graph.
+    title = None
+
+    #: Transparent flag (or value).
+    #: *False* is non-transparent rendering, *True* is default value
+    #: transparent, *float* value is value's transparent.
+    transparent = False
+
+    #: setting labels
+    x_axis_label = y_axis_label = None
 
     def __init__(self, target_width=DEFAULT_TARGET_WIDTH):
         if type(target_width) is not int:
@@ -26,11 +44,11 @@ class Base(object):
             self.columns = float(target_width)
             self.rows = target_width * 0.75
 
-        self.initialize_ivars()
-        self.reset_themes()
+        self._initialize_ivars()
+        self._reset_themes()
         self.theme_keynote()
 
-    def initialize_ivars(self):
+    def _initialize_ivars(self):
         """Internal for calculations"""
         self.raw_columns = 800.0
         self.raw_rows = 800.0 * (self.rows / self.columns)
@@ -42,8 +60,6 @@ class Base(object):
         self.labels = {}
         self.labels_seen = {}
         self.sort = True
-        self.transparent = False
-        self.title = None
 
         self.scale = self.columns / self.raw_columns
 
@@ -80,17 +96,18 @@ class Base(object):
         self.additional_line_colors = []
         self.theme_options = {}
 
-        self.x_axis_label = self.y_axis_label = None
         self.y_axis_increment = None
         self.stacked = None
         self.norm_data = None
 
-    def reset_themes(self):
+    def _reset_themes(self):
         self.color_index = 0
         self.labels_seen = {}
         self.theme_options = {}
 
     def theme_keynote(self):
+        """Setting up Keynote like gradient theme.
+        """
         self.blue = '#6886B4'
         self.yellow = '#FDD84E'
         self.green = '#72AE6E'
@@ -107,6 +124,8 @@ class Base(object):
                         'background_colors': ['black', '#4a465a']})
 
     def theme_37signals(self):
+        """Setting up 37 signals like gradient theme.
+        """
         self.green = '#339933'
         self.purple = '#cc99cc'
         self.blue = '#336699'
@@ -122,8 +141,7 @@ class Base(object):
                         'background_colors': ['#d1edf5', 'white']})
 
     def theme_rails_keynote(self):
-        """
-        A color scheme from the colors used on the 2005 Rails keynote
+        """A color scheme from the colors used on the 2005 Rails keynote
         presentation at RubyConf.
         """
         self.green = '#00ff00'
@@ -141,8 +159,7 @@ class Base(object):
                         'background_colors': ['#0083a3', '#0083a3']})
 
     def theme_odeo(self):
-        """
-        A color scheme similar to that used on the popular podcast site.
+        """A color scheme similar to that used on the popular podcast site.
         """
         self.grey = '#202020'
         self.white = 'white'
@@ -159,6 +176,7 @@ class Base(object):
                         'background_colors': ['#ff47a4', '#ff1f81']})
 
     def theme_pastel(self):
+        """Setting up pastel color theme."""
         self.colors = ['#a9dada',   # blue
                        '#aedaa9',   # green
                        '#daaea9',   # peach
@@ -173,7 +191,7 @@ class Base(object):
                         'background_colors': 'white'})
 
     def theme_django(self):
-        """like a Django"""
+        """Setting up Django like theme"""
         self.colors = ['#a9dada', '#aedaa9', '#94da3a',
                        '#487854', '#a9a9da', '#dadada']
         self.set_theme({'colors': self.colors,
@@ -182,6 +200,7 @@ class Base(object):
                         'background_colors': ['#092e20', '#234f32']})
 
     def theme_greyscale(self):
+        """Setting up black and white theme"""
         self.colors = ['#282828', '#383838', '#686868',
                        '#989898', '#c8c8c8', '#e8e8e8']
         self.set_theme({'colors': self.colors,
@@ -218,7 +237,7 @@ class Base(object):
         return image
 
     def set_theme(self, options):
-        self.reset_themes()
+        self._reset_themes()
 
         defaults = {
                 'colors': ['black', 'white'],
@@ -241,6 +260,12 @@ class Base(object):
         return self.colors[self.color_index - 1]
 
     def data(self, name, data_points=[], color=None):
+        """Set up graph dataset
+
+        :param name: data name
+        :param data_points: list of data point
+        :param color: *force* settig color of graph data
+        """
         data_points = list(data_points)
         self.gdata.append({'label': name,
                            'values': data_points,
@@ -647,7 +672,8 @@ class Base(object):
             self.graph_left = self.left_margin + line_number_width + tmp
 
             # Make space for half the width of the rightmost column label.
-            # Might be greater than the number of columns if between-style bar markers are used.
+            # Might be greater than the number of columns if between-style bar
+            # markers are used.
             tmp = self.labels.keys()
             tmp.sort()
             if len(tmp):
@@ -694,16 +720,30 @@ class Base(object):
         self.setup_drawing()
 
     def write(self, filename="graph.png"):
+        """draw graph and save the graph image.
+        """
         self.draw()
         self.base_image.write(filename)
 
     def display(self):
+        """wrapper for :func:`pgmagick.Image.display`
+
+        draw graph, and render graph.
+        """
         self.draw()
         self.base_image.display()
 
 
 class StackedMixin(object):
-    """Stacked Graph Mix-in"""
+    """Stacked Graph Mix-in
+
+    When you create new stacked graph object, mixed in this object::
+
+        from gruffy.base import Base, StackedMixin
+
+        class NewStackedGraph(Base, StackedMixin):
+            pass
+    """
 
     def get_maximum_by_stack(self):
         """get sum of each stack"""
