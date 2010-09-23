@@ -10,6 +10,8 @@ test:
 	cd test && python test_pie.py
 	cd test && python test_sidebar.py
 	cd test && python test_stacked_area.py
+	cd test && python test_stacked_bar.py
+	cd test && python test_stacked_sidebar.py
 
 pypireg:
 	python setup.py register
