@@ -700,3 +700,20 @@ class Base(object):
     def display(self):
         self.draw()
         self.base_image.display()
+
+
+class StackedMixin(object):
+    """Stacked Graph Mix-in"""
+
+    def get_maximum_by_stack(self):
+        """get sum of each stack"""
+        max_hash = {}
+        for data_set in self.gdata:
+            for i, data_point in enumerate(data_set['values']):
+                if i not in max_hash:
+                    max_hash[i] = 0.0
+                max_hash[i] += float(data_point)
+        for key in max_hash.keys():
+            if max_hash[key] > self.maximum_value:
+                self.maximum_value = max_hash[key]
+            self.minimum_value = 0
