@@ -16,7 +16,7 @@ class StackedArea(Base, StackedMixin):
         self.x_increment = self.graph_width / float(self.column_count - 1)
         dl.append(DrawableStrokeColor('transparent'))
 
-        height = range(self.column_count)
+        height = [0 for i in range(self.column_count)]
 
         data_points = None
         if self.last_series_goes_on_bottom:

@@ -11,9 +11,9 @@ class SideBar(Base):
         SideBar.__base__.draw(self)
         if not self.has_gdata:
             return
-        self._draw_bars()
+        self.draw_bars()
 
-    def _draw_bars(self):
+    def draw_bars(self):
         dl = DrawableList()
 
         self.bar_spacing = self.bar_spacing or 0.9
