@@ -10,8 +10,8 @@ def deg2rad(angle):
 class Pie(Base):
     """Pie Graph Class"""
 
-    def initialize_ivars(self):
-        Pie.__base__.initialize_ivars(self)
+    def _initialize_ivars(self):
+        Pie.__base__._initialize_ivars(self)
         self.zero_degree = 0.0
         self.hide_labels_less_than = 0.0
 

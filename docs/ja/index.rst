@@ -1,12 +1,8 @@
-.. Gruffy documentation master file, created by
-   sphinx-quickstart on Thu Sep 23 01:11:12 2010.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 :tocdepth: 2
 
-Gruffy ドキュメント
-===================
+Gruffyへようこそ
+================
+
 
 Gruffyとは？
 ============
@@ -19,17 +15,21 @@ Gruffy を使用するには `pgmagick`_ モジュールが必要です。
 .. _`Gruff`: http://nubyonrails.com/pages/gruff
 .. _`pgmagick`: http://pypi.python.org/pypi/pgmagick/
 
+
 ドキュメント
 ============
 .. toctree::
    :maxdepth: 1
 
    intro
+   api
+
 
 グラフの作成例
 ==============
 .. image:: _static/gruffy-area-sample.png
 .. image:: _static/gruffy-sidebar-sample.png
+
 
 サンプルコード
 ==============
@@ -50,6 +50,7 @@ Gruffy を使用するには `pgmagick`_ モジュールが必要です。
     g.labels = {0: '2003', 2: '2004', 4: '2005.09'}
 
     g.write()
+
 
 ソースコード
 ============
