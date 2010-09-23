@@ -45,8 +45,8 @@ setup.pyスクリプトをすることでインストールすることができ
     python setup.py install
 
 
-初めの一歩
-==========
+基本的な使い方
+==============
 インストールが完了したら、さっそくGruffyを使ってグラフを作ってみましょう。
 以下のソースコードを :file:`first.py` として保存し、実行してください。
 
@@ -70,7 +70,7 @@ setup.pyスクリプトをすることでインストールすることができ
 
     python first.py
 
-:file:`graph.png` が作成されているはずです。
+:file:`graph.png` が作成されました。
 
 .. image:: _static/gruffy-introduction-line.png
 
