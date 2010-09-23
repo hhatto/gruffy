@@ -13,7 +13,7 @@ test:
 
 pypireg:
 	python setup.py register
-	python setup.py sdist upload
+	python setup.py sdist bdist_egg upload
 
 clean:
 	rm -f gruffy/*.pyc
