@@ -3,12 +3,12 @@ from gruffy.base import *
 TEXT_OFFSET_PERCENTAGE = 0.15
 
 
-def deg2rad(angle):
+def _deg2rad(angle):
     return angle * (math.pi / 180.0)
 
 
 class Pie(Base):
-    """Pie Graph Class"""
+    """Pie Graph Object"""
 
     def _initialize_ivars(self):
         Pie.__base__._initialize_ivars(self)
@@ -88,8 +88,8 @@ class Pie(Base):
         radius_offset = (radius + r_offset)
         ellipse_factor = radius_offset * 0.15
         x = x_offset + ((radius_offset + ellipse_factor) * \
-                        math.cos(deg2rad(angle)))
-        y = y_offset + (radius_offset * math.sin(deg2rad(angle)))
+                        math.cos(_deg2rad(angle)))
+        y = y_offset + (radius_offset * math.sin(_deg2rad(angle)))
 
         # Draw label
         dl.append(DrawableFillColor(Color(self.font_color)))

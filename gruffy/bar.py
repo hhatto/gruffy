@@ -3,6 +3,7 @@ from gruffy.bar_conversion import BarConversion
 
 
 class Bar(Base):
+    """Bar Graph Object"""
 
     bar_spacing = 0
 

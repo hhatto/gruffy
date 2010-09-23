@@ -2,7 +2,7 @@ from gruffy.base import *
 
 
 class StackedBar(Base, StackedMixin):
-    """Stacked Bar Graph Class"""
+    """Stacked Bar Graph Object"""
 
     bar_spacing = None
 

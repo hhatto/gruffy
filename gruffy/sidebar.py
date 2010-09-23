@@ -2,7 +2,7 @@ from gruffy.base import *
 
 
 class SideBar(Base):
-    """Side Bar Graph Class"""
+    """Side Bar Graph Object"""
 
     bar_spacing = None
 

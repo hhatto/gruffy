@@ -3,7 +3,7 @@ from gruffy.base import *
 
 
 class StackedArea(Base, StackedMixin):
-    """Stacked Area Graph Class"""
+    """Stacked Area Graph Object"""
 
     last_series_goes_on_bottom = None
 

@@ -2,7 +2,7 @@ from gruffy.base import *
 
 
 class Dot(Base):
-    """Dot Graph Class"""
+    """Dot Graph Object"""
 
     def draw(self):
         self.has_left_labels = True
