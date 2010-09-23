@@ -6,4 +6,4 @@ g.theme_greyscale()
 
 g.data("test1", [1, 2, 3])
 g.data("test2", [3, 2, 1])
-g.write()
+g.write('gruffy_side_bar.png')
