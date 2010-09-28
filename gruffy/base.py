@@ -287,10 +287,10 @@ class Base(object):
             if self.minimum_value < 0:
                 self.has_gdata = True
 
-    def annotate_scaled(self, width, height, text, scale, gravity):
-        scaled_width = (width * scale) if (width * scale) >= 1 else 1
-        scaled_height = (height * scale) if (height * scale) >= 1 else 1
-        self.base_image.annotate(text, gravity)
+    def drawtext_scaled(self, width, height, text):
+        scaled_width = width * self.scale
+        scaled_height = height * self.scale
+        return DrawableText(scaled_width, scaled_height, text)
 
     def draw_line_markers(self):
         if self.hide_line_markers:
@@ -346,8 +346,8 @@ class Base(object):
                 dl.append(DrawableGravity(GravityType.NorthWestGravity))
                 x = self.calculate_width(self.marker_font_size, marker_label) / 2
                 y = y + self.calculate_caps_height(marker_font_size) / 3
-                dl.append(DrawableText(self.graph_left - LABEL_MARGIN - x,
-                                       y, self.label(marker_label)))
+                dl.append(self.drawtext_scaled(self.graph_left - LABEL_MARGIN - x,
+                                               y, self.label(marker_label)))
         dl.append(DrawableStrokeAntialias(True))
         self.base_image.draw(dl)
 
@@ -368,9 +368,9 @@ class Base(object):
             label_font_height = self.calculate_caps_height(self.marker_font_size) / 2
             label_text_width = self.calculate_width(self.marker_font_size,
                                                     self.labels[index])
-            dl.append(DrawableText(x_offset - label_text_width / 2.0,
-                                   y_offset + label_font_height,
-                                   self.labels[index]))
+            dl.append(self.drawtext_scaled(x_offset - label_text_width / 2.0,
+                                           y_offset + label_font_height,
+                                           self.labels[index]))
             self.base_image.draw(dl)
             self.labels_seen[index] = 1
 
@@ -383,8 +383,7 @@ class Base(object):
         dl.append(DrawableFont(font, StyleType.NormalStyle, 800,
                                StretchType.NormalStretch))
         dl.append(DrawablePointSize(self.scale_fontsize(80)))
-        dl.append(DrawableText(0, 0,
-                               self.no_data_message))
+        dl.append(self.drawtext_scaled(0, 0, self.no_data_message))
         self.base_image.draw(dl)
 
     def scale_fontsize(self, value):
@@ -427,8 +426,8 @@ class Base(object):
         self.norm_data.sort(normcompare)
         self.norm_data.reverse()
 
-    def center(self, lsize):
-        return self.raw_columns / 2 - lsize / 2
+    def center(self, size):
+        return (self.raw_columns - size) / 2
 
     def draw_axis_labels(self):
         if self.x_axis_label:
@@ -447,11 +446,11 @@ class Base(object):
             dl.append(DrawablePointSize(self.scale_fontsize(self.marker_font_size)))
             dl.append(DrawableGravity(GravityType.NorthGravity))
             # graph center
-            #dl.append(DrawableText(self.graph_left / 2.0,
-            #                       x_axis_label_y_coordinate,
-            #                       self.x_axis_label))
-            dl.append(DrawableText(0.0, x_axis_label_y_coordinate,
-                                   self.x_axis_label))
+            #dl.append(self.drawtext_scaled(self.graph_left / 2.0,
+            #                               x_axis_label_y_coordinate,
+            #                               self.x_axis_label))
+            dl.append(self.drawtext_scaled(0.0, x_axis_label_y_coordinate,
+                                           self.x_axis_label))
             self.base_image.draw(dl)
         if self.y_axis_label:
             # Y Axis, rotated vertically
@@ -467,7 +466,7 @@ class Base(object):
             dl.append(DrawableGravity(GravityType.WestGravity))
             x = -(self.calculate_width(fontsize, self.y_axis_label) / 2.0)
             y = -(self.left_margin + self.marker_caps_height / 2.0)
-            dl.append(DrawableText(x, y, self.y_axis_label))
+            dl.append(self.drawtext_scaled(x, y, self.y_axis_label))
             dl.append(DrawableRotation(-90))
             self.base_image.draw(dl)
 
@@ -513,9 +512,9 @@ class Base(object):
                                    StretchType.NormalStretch))
             dl.append(DrawablePointSize(self.scale_fontsize(self.legend_font_size)))
             dl.append(DrawableGravity(GravityType.NorthWestGravity))
-            dl.append(DrawableText(current_x_offset + (legend_square_width * 1.7),
-                                   current_y_offset + self.legend_caps_height / 3,
-                                   str(legend_label)))
+            x = current_x_offset + legend_square_width * 1.7
+            y = current_y_offset + self.legend_caps_height / 3
+            dl.append(self.drawtext_scaled(x, y, str(legend_label)))
 
             dl.append(DrawablePointSize(self.scale_fontsize(self.legend_font_size)))
             metrics = TypeMetric()
@@ -551,7 +550,7 @@ class Base(object):
                                StretchType.NormalStretch))
         dl.append(DrawablePointSize(self.scale_fontsize(self.title_font_size)))
         y = self.top_margin + self.title_caps_height / 2.0
-        dl.append(DrawableText(0, y, self.title))
+        dl.append(self.drawtext_scaled(0, y, self.title))
         self.base_image.draw(dl)
 
     def setup_drawing(self):

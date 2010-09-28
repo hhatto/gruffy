@@ -90,9 +90,9 @@ class SideBar(Base):
                 x -= text_width / 2
                 y = self.graph_bottom + (LABEL_MARGIN * 2.0)
                 if type(marker_label) is int:
-                    dl.append(DrawableText(x, y, "%d" % marker_label))
+                    dl.append(self.drawtext_scaled(x, y, "%d" % marker_label))
                 else:
-                    dl.append(DrawableText(x, y, "%.1f" % marker_label))
+                    dl.append(self.drawtext_scaled(x, y, "%.1f" % marker_label))
             dl.append(DrawableStrokeAntialias(True))
         self.base_image.draw(dl)
 
@@ -113,6 +113,6 @@ class SideBar(Base):
             x = -(self.columns / 2 - self.graph_left + LABEL_MARGIN * 2.0 + \
                   text_width / 2.0)
             y = y_offset + font_hight / 2.0
-            dl.append(DrawableText(x, y, self.labels[index]))
+            dl.append(self.drawtext_scaled(x, y, self.labels[index]))
             self.labels_seen[index] = 1
             self.base_image.draw(dl)
