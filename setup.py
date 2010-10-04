@@ -7,7 +7,7 @@ sys.path.insert(0, 'gruffy')
 
 setup(
     name='gruffy',
-    version='0.1.4',
+    version='0.2.0',
     description="Gruffy is Python implemetation of Gruff(Ruby Graphing Library)",
     long_description=open("README.rst").read(),
     license='MIT',
@@ -15,7 +15,7 @@ setup(
     author_email='hhatto.jp@gmail.com',
     url='http://pypi.python.org/pypi/gruffy/',
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Operating System :: Unix',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python',
