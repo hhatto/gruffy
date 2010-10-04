@@ -11,8 +11,8 @@ Rubyで実装された `Gruff`_ のPythonによる実装です。
 
 Gruffy を使用するには `pgmagick`_ モジュールが必要です。
 
-.. _`Gruffy`: http://pypi.python.org/pypi/gruffy/
 .. _`Gruff`: http://nubyonrails.com/pages/gruff
+.. _`Gruffy`: http://pypi.python.org/pypi/gruffy/
 .. _`pgmagick`: http://pypi.python.org/pypi/pgmagick/
 
 
