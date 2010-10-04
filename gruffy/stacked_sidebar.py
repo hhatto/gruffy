@@ -55,6 +55,7 @@ class StackedSideBar(SideBar, StackedMixin):
                                (self.bar_width * point_index) + \
                                (self.bar_width * self.bar_spacing / 2.0)
                 self.draw_label(label_center, point_index)
+        dl.append(DrawableScaling(self.scale, self.scale))
         self.base_image.draw(dl)
 
     def larger_than_max(self, data_point, index=0):

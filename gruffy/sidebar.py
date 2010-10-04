@@ -51,6 +51,7 @@ class SideBar(Base):
                 label_center = self.graph_top + \
                         (self.bars_width * point_index + self.bars_width / 2)
                 self.draw_label(label_center, point_index)
+        dl.append(DrawableScaling(self.scale, self.scale))
         self.base_image.draw(dl)
 
     # Instead of base class version, draws vertical background lines and label
@@ -81,19 +82,19 @@ class SideBar(Base):
                 dl.append(DrawableFont(font, StyleType.NormalStyle, 400,
                                        StretchType.NormalStretch))
                 dl.append(DrawableStrokeColor(Color('transparent')))
-                marker_font_size = self.scale_fontsize(self.marker_font_size)
                 dl.append(DrawablePointSize(self.marker_font_size))
                 dl.append(DrawableGravity(GravityType.NorthWestGravity))
-                text_width = self.calculate_width(marker_font_size,
+                text_width = self.calculate_width(self.marker_font_size,
                                                   str(marker_label))
                 # TODO Center text over line
                 x -= text_width / 2
                 y = self.graph_bottom + (LABEL_MARGIN * 2.0)
                 if type(marker_label) is int:
-                    dl.append(self.drawtext_scaled(x, y, "%d" % marker_label))
+                    dl.append(DrawableText(x, y, "%d" % marker_label))
                 else:
-                    dl.append(self.drawtext_scaled(x, y, "%.1f" % marker_label))
+                    dl.append(DrawableText(x, y, "%.1f" % marker_label))
             dl.append(DrawableStrokeAntialias(True))
+        dl.append(DrawableScaling(self.scale, self.scale))
         self.base_image.draw(dl)
 
     def draw_label(self, y_offset, index):
@@ -105,14 +106,13 @@ class SideBar(Base):
             dl.append(DrawableFont(font, StyleType.NormalStyle, 400,
                                    StretchType.NormalStretch))
             dl.append(DrawableStrokeColor(Color('transparent')))
-            marker_font_size = self.scale_fontsize(self.marker_font_size)
-            dl.append(DrawablePointSize(marker_font_size))
+            dl.append(DrawablePointSize(self.marker_font_size))
             font_hight = self.calculate_caps_height(self.marker_font_size)
-            text_width = self.calculate_width(marker_font_size,
+            text_width = self.calculate_width(self.marker_font_size,
                                               self.labels[index])
-            x = -(self.columns / 2 - self.graph_left + LABEL_MARGIN * 2.0 + \
-                  text_width / 2.0)
+            x = -(self.graph_left + LABEL_MARGIN * 2.7 + text_width / 2.0)
             y = y_offset + font_hight / 2.0
-            dl.append(self.drawtext_scaled(x, y, self.labels[index]))
+            dl.append(DrawableText(x, y, self.labels[index]))
             self.labels_seen[index] = 1
+            dl.append(DrawableScaling(self.scale, self.scale))
             self.base_image.draw(dl)

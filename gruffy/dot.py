@@ -46,6 +46,7 @@ class Dot(Base):
                 label_center = self.graph_top + (self.items_width * \
                         point_index + self.items_width / 2) + padding
                 self.draw_label(label_center, point_index)
+        dl.append(DrawableScaling(self.scale, self.scale))
         self.base_image.draw(dl)
 
     def draw_line_markers(self):
@@ -76,15 +77,16 @@ class Dot(Base):
                 dl.append(DrawableFont(font, StyleType.NormalStyle, 400,
                                        StretchType.NormalStretch))
                 dl.append(DrawableStrokeColor('transparent'))
-                marker_font_size = self.scale_fontsize(self.marker_font_size)
-                dl.append(DrawablePointSize(marker_font_size))
+                dl.append(DrawablePointSize(self.marker_font_size))
                 dl.append(DrawableGravity(GravityType.NorthWestGravity))
                 font_hight = self.calculate_caps_height(self.marker_font_size)
-                text_width = self.calculate_width(marker_font_size, str(marker_label))
+                text_width = self.calculate_width(self.marker_font_size,
+                                                  str(marker_label))
                 x -= text_width / 2.0
                 y = font_hight / 2.0 + self.graph_bottom + (LABEL_MARGIN * 2.0)
                 dl.append(DrawableText(x, y, str(marker_label)))
             dl.append(DrawableStrokeAntialias(True))
+        dl.append(DrawableScaling(self.scale, self.scale))
         self.base_image.draw(dl)
 
     def draw_label(self, y_offset, index):
@@ -95,15 +97,14 @@ class Dot(Base):
             dl.append(DrawableFont(font, StyleType.NormalStyle, 400,
                                    StretchType.NormalStretch))
             dl.append(DrawableStrokeColor('transparent'))
-            marker_font_size = self.scale_fontsize(self.marker_font_size)
-            dl.append(DrawablePointSize(marker_font_size))
+            dl.append(DrawablePointSize(self.marker_font_size))
             dl.append(DrawableGravity(GravityType.NorthGravity))
             font_hight = self.calculate_caps_height(self.marker_font_size)
-            text_width = self.calculate_width(marker_font_size,
+            text_width = self.calculate_width(self.marker_font_size,
                                               self.labels[index])
-            x = -(self.columns / 2 - self.graph_left + LABEL_MARGIN * 2.0 + \
-                  text_width / 2.0)
+            x = -(self.graph_left + LABEL_MARGIN * 2.7 + text_width / 2.0)
             y = y_offset + font_hight / 2.0
             dl.append(DrawableText(x, y, self.labels[index]))
             self.labels_seen[index] = 1
+            dl.append(DrawableScaling(self.scale, self.scale))
             self.base_image.draw(dl)

@@ -45,4 +45,5 @@ class StackedBar(Base, StackedMixin):
                 # update the total height of the current stacked bar
                 height[point_index] += (data_point * self.graph_height)
                 dl.append(DrawableRectangle(left_x, left_y, right_x, right_y))
+        dl.append(DrawableScaling(self.scale, self.scale))
         self.base_image.draw(dl)

@@ -101,6 +101,8 @@ class Pie(Base):
         dl.append(DrawableStrokeColor('transparent'))
         dl.append(DrawableGravity(GravityType.NorthWestGravity))
         dl.append(DrawableText(x, y, amount))
+        # FIXME: unable scaling
+        dl.append(DrawableScaling(self.scale, self.scale))
         self.base_image.draw(dl)
 
     def sums_for_pie(self):

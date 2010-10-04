@@ -78,6 +78,7 @@ class Line(Base):
 
                 prev_x = new_x
                 prev_y = new_y
+        dl.append(DrawableScaling(self.scale, self.scale))
         self.base_image.draw(dl)
 
     def normalize(self):

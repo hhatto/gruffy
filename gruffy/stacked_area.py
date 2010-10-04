@@ -59,4 +59,5 @@ class StackedArea(Base, StackedMixin):
             for c in coordinates:
                 cl.append(c)
             dl.append(DrawablePolyline(cl))
+        dl.append(DrawableScaling(self.scale, self.scale))
         self.base_image.draw(dl)

@@ -42,4 +42,5 @@ class Area(Base):
             poly_points.append(Coordinate(self.graph_left,
                                           self.graph_bottom - 1))
             dl.append(DrawablePolyline(poly_points))
+        dl.append(DrawableScaling(self.scale, self.scale))
         self.base_image.draw(dl)

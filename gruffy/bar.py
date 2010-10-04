@@ -22,14 +22,11 @@ class Bar(Base):
         self.bar_width = self.graph_width / \
                             float(self.column_count * len(self.gdata))
         padding = (self.bar_width * (1 - self.bar_spacing)) / 2
-
         dl = DrawableList()
         dl.append(DrawableStrokeOpacity(0.0))
-
         conversion = BarConversion()
         conversion.graph_height = self.graph_height
         conversion.graph_top = self.graph_top
-
         if self.minimum_value >= 0:
             conversion.mode = 1
         else:
@@ -40,7 +37,6 @@ class Bar(Base):
                 conversion.spread = self.spread
                 conversion.minimum_value = self.minimum_value
                 conversion.zero = -self.minimum_value / self.spread
-
         for row_index, data_row in enumerate(self.norm_data):
             for point_index, data_point in enumerate(data_row['values']):
                 left_x = self.graph_left + (self.bar_width * \
@@ -48,7 +44,6 @@ class Bar(Base):
                              ((len(self.gdata) - 1) * point_index))) + padding
                 right_x = left_x + self.bar_width * self.bar_spacing
                 conv = conversion.getLeftYRightYscaled(data_point)
-
                 dl.append(DrawableFillColor(Color(data_row['color'])))
                 if type(self.transparent) is float:
                     dl.append(DrawableFillOpacity(self.transparent))
@@ -64,8 +59,7 @@ class Bar(Base):
                 else:
                     tmp = 0.0
                 self.draw_label(label_center - tmp, point_index)
-
         if self.center_labels_over_point:
             self.draw_label(self.graph_right, self.column_count)
-
+        dl.append(DrawableScaling(self.scale, self.scale))
         self.base_image.draw(dl)
