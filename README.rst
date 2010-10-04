@@ -45,3 +45,11 @@ Bar Graph Sample::
     g.labels = {0: '2003', 2: '2004', 4: '2005'}
 
     g.write('sample.png')
+
+
+Getting the source
+==================
+Download from github_ or PyPI_
+
+.. _github: http://github.com/hhatto/gruffy
+.. _PyPI: http://pypi.python.org/pypi/gruffy
