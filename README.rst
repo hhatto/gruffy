@@ -53,3 +53,11 @@ Download from github_ or PyPI_
 
 .. _github: http://github.com/hhatto/gruffy
 .. _PyPI: http://pypi.python.org/pypi/gruffy
+
+
+Documentation
+=============
+`Gruffy Documentation`_
+
+.. _`Gruffy Documentation`: http://www.hexacosa.net/documents/gruffy/
+
