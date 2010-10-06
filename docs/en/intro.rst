@@ -70,7 +70,15 @@ Now, execute script.
 
 create to the :file:`graph.png` file.
 
-.. image:: _static/gruffy-introduction-line.png
+.. gruffy::
+   :type: Line
+   :title: Gruffy's Graph
+
+    data("Apples", [1, 2, 3, 4, 4, 3])
+    data("Oranges", [4, 8, 7, 9, 8, 9])
+    data("Watermelon", [2, 3, 1, 5, 6, 8])
+    data("Peaches", [9, 9, 10, 8, 7, 9])
+    labels = {0: '2011', 2: '2013', 4: '2015'}
 
 
 And More
