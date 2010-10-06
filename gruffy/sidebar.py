@@ -102,7 +102,7 @@ class SideBar(Base):
             dl = DrawableList()
             dl.append(DrawableFillColor(self.font_color))
             font = self.font if self.font else DEFAULT_FONT
-            dl.append(DrawableGravity(GravityType.NorthGravity))
+            dl.append(DrawableGravity(GravityType.NorthEastGravity))
             dl.append(DrawableFont(font, StyleType.NormalStyle, 400,
                                    StretchType.NormalStretch))
             dl.append(DrawableStrokeColor(Color('transparent')))
@@ -110,7 +110,7 @@ class SideBar(Base):
             font_hight = self.calculate_caps_height(self.marker_font_size)
             text_width = self.calculate_width(self.marker_font_size,
                                               self.labels[index])
-            x = -(self.graph_left + LABEL_MARGIN * 2.7 + text_width / 2.0)
+            x = self.graph_left + LABEL_MARGIN * 3.5
             y = y_offset + font_hight / 2.0
             dl.append(DrawableText(x, y, self.labels[index]))
             self.labels_seen[index] = 1
