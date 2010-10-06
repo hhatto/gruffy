@@ -27,8 +27,31 @@ Documentation
 
 ScreenShots
 ===========
-.. image:: _static/gruffy-area-sample.png
-.. image:: _static/gruffy-sidebar-sample.png
+
+.. gruffy::
+   :title: Gruffy's Graph
+   :width: 500
+   :type: Area
+
+    transparent = True
+    data("Apples", [1, 2, 3, 4, 4, 3])
+    data("Oranges", [4, 8, 7, 9, 8, 9])
+    data("Watermelon", [2, 3, 1, 5, 6, 8])
+    data("Peaches", [9, 9, 10, 8, 7, 9])
+    labels = {0: '2003', 2: '2004', 4: '2005.09'}
+
+.. gruffy::
+   :title: Gruffy's Graph
+   :width: 500
+   :type: StackedSideBar
+
+    theme_pastel()
+    transparent = True
+    data("Apples", [1, 2, 3, 4, 4, 3])
+    data("Oranges", [4, 8, 7, 9, 8, 9])
+    data("Watermelon", [2, 3, 1, 5, 6, 8])
+    data("Peaches", [9, 9, 10, 8, 7, 9])
+    labels = {0: '2003', 2: '2004', 4: '2005.09'}
 
 
 Code Sample
