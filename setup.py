@@ -7,7 +7,7 @@ sys.path.insert(0, 'gruffy')
 
 setup(
     name='gruffy',
-    version='0.2.0',
+    version='0.2.2',
     description="Gruffy is Python implemetation of Gruff(Ruby Graphing Library)",
     long_description=open("README.rst").read(),
     license='MIT',
