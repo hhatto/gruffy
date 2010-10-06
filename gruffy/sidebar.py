@@ -110,7 +110,7 @@ class SideBar(Base):
             font_hight = self.calculate_caps_height(self.marker_font_size)
             text_width = self.calculate_width(self.marker_font_size,
                                               self.labels[index])
-            x = self.graph_left + LABEL_MARGIN * 3.5
+            x = self.raw_columns - self.graph_left + LABEL_MARGIN
             y = y_offset + font_hight / 2.0
             dl.append(DrawableText(x, y, self.labels[index]))
             self.labels_seen[index] = 1
