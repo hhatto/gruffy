@@ -685,7 +685,7 @@ class Base(object):
                self.center_labels_over_point:
                 extra_room_for_long_label = \
                         self.calculate_width(self.marker_font_size,
-                                             self.labels[last_label])
+                                             self.labels[last_label]) / 2.0
             else:
                 extra_room_for_long_label = 0
             self.graph_right_margin = self.right_margin + extra_room_for_long_label
