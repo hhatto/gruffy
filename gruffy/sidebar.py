@@ -14,23 +14,23 @@ class SideBar(Base):
         self.draw_bars()
 
     def draw_bars(self):
-        dl = DrawableList()
+        self.dl = DrawableList()
 
         self.bar_spacing = self.bar_spacing or 0.9
         self.bars_width = self.graph_height / float(self.column_count)
         self.bar_width = self.bars_width * self.bar_spacing / len(self.norm_data)
-        dl.append(DrawableStrokeOpacity(0.0))
+        self.dl.append(DrawableStrokeOpacity(0.0))
         height = [0 for i in range(self.column_count)]
         length = [self.graph_left for i in range(self.column_count)]
         padding = (self.bar_width * (1 - self.bar_spacing)) / 2
 
         for row_index, data_row in enumerate(self.norm_data):
-            dl.append(DrawableFillColor(Color(data_row['color'])))
-            if type(self.transparent) is float:
-                dl.append(DrawableFillOpacity(self.transparent))
-            elif self.transparent is True:
-                dl.append(DrawableFillOpacity(DEFAULT_TRANSPARENCY))
             for point_index, data_point in enumerate(data_row['values']):
+                self.dl.append(DrawableFillColor(Color(data_row['color'])))
+                if type(self.transparent) is float:
+                    self.dl.append(DrawableFillOpacity(self.transparent))
+                elif self.transparent is True:
+                    self.dl.append(DrawableFillOpacity(DEFAULT_TRANSPARENCY))
                 # Using the original calcs from the stacked bar chart
                 # to get the difference between
                 # part of the bart chart we wish to stack.
@@ -45,14 +45,17 @@ class SideBar(Base):
                 right_x = left_x + difference
                 right_y = left_y + self.bar_width
                 height[point_index] += (data_point * self.graph_width)
-                dl.append(DrawableRectangle(left_x, left_y, right_x, right_y))
+                self.dl.append(DrawableRectangle(left_x, left_y, right_x, right_y))
 
                 # Calculate center based on bar_width and current row
                 label_center = self.graph_top + \
                         (self.bars_width * point_index + self.bars_width / 2)
                 self.draw_label(label_center, point_index)
-        dl.append(DrawableScaling(self.scale, self.scale))
-        self.base_image.draw(dl)
+                if self.additional_line_values:
+                    self.draw_values(label_center,
+                                     self.gdata[row_index]['values'][point_index])
+        self.dl.append(DrawableScaling(self.scale, self.scale))
+        self.base_image.draw(self.dl)
 
     # Instead of base class version, draws vertical background lines and label
     def draw_line_markers(self):
@@ -116,3 +119,19 @@ class SideBar(Base):
             self.labels_seen[index] = 1
             dl.append(DrawableScaling(self.scale, self.scale))
             self.base_image.draw(dl)
+
+    def draw_values(self, y_offset, point):
+        self.dl.append(DrawableFillColor(self.font_color))
+        font = self.font if self.font else DEFAULT_FONT
+        self.dl.append(DrawableGravity(GravityType.NorthWestGravity))
+        self.dl.append(DrawableFont(font, StyleType.ItalicStyle, 400,
+                                    StretchType.NormalStretch))
+        self.dl.append(DrawableStrokeColor(Color('transparent')))
+        marker_font_size = self.marker_font_size * 0.7
+        self.dl.append(DrawablePointSize(marker_font_size))
+        font_hight = self.calculate_caps_height(marker_font_size)
+        text_width = self.calculate_width(self.marker_font_size,
+                                          "%.2lf" % point)
+        x = self.graph_left + LABEL_MARGIN
+        y = y_offset + font_hight / 2.0
+        self.dl.append(DrawableText(x, y, "%.2lf" % point))

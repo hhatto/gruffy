@@ -92,7 +92,7 @@ class Base(object):
         self.center_labels_over_point = True
         self.has_left_labels = False
 
-        self.additional_line_values = []
+        self.additional_line_values = False
         self.additional_line_colors = []
         self.theme_options = {}
 
