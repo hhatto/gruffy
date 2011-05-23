@@ -34,6 +34,7 @@ class Base(object):
 
     #: setting labels
     x_axis_label = y_axis_label = None
+    additional_line_values = False
 
     def __init__(self, target_width=DEFAULT_TARGET_WIDTH):
         if type(target_width) is not int:
@@ -92,7 +93,6 @@ class Base(object):
         self.center_labels_over_point = True
         self.has_left_labels = False
 
-        self.additional_line_values = False
         self.additional_line_colors = []
         self.theme_options = {}
 
