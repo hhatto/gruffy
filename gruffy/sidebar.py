@@ -52,7 +52,7 @@ class SideBar(Base):
                         (self.bars_width * point_index + self.bars_width / 2)
                 self.draw_label(label_center, point_index)
                 if self.additional_line_values:
-                    self.draw_values(label_center,
+                    self.draw_values(left_y + self.bar_width / 2,
                                      self.gdata[row_index]['values'][point_index])
         self.dl.append(DrawableScaling(self.scale, self.scale))
         self.base_image.draw(self.dl)
