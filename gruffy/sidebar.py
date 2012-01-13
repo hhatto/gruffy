@@ -56,7 +56,6 @@ class SideBar(Base):
                     _gdata = self.find_label(data_row['label'])
                     self.draw_values(left_y + self.bar_width / 2,
                                      _gdata['values'][point_index])
-        print self.gdata
         self.dl.append(DrawableScaling(self.scale, self.scale))
         self.base_image.draw(self.dl)
 
