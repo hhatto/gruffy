@@ -1,3 +1,4 @@
+import copy
 from gruffy.base import *
 
 
@@ -52,10 +53,17 @@ class SideBar(Base):
                         (self.bars_width * point_index + self.bars_width / 2)
                 self.draw_label(label_center, point_index)
                 if self.additional_line_values:
+                    _gdata = self.find_label(data_row['label'])
                     self.draw_values(left_y + self.bar_width / 2,
-                                     self.gdata[row_index]['values'][point_index])
+                                     _gdata['values'][point_index])
+        print self.gdata
         self.dl.append(DrawableScaling(self.scale, self.scale))
         self.base_image.draw(self.dl)
+
+    def find_label(self, label):
+        for i in self.gdata:
+            if i['label'] == label:
+                return copy.copy(i)
 
     # Instead of base class version, draws vertical background lines and label
     def draw_line_markers(self):
