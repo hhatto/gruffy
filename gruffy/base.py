@@ -277,6 +277,8 @@ class Base(object):
                 continue
             if self.maximum_value is None and self.minimum_value is None:
                 self.maximum_value = self.minimum_value = data_point
+                if self.minimum_value >= 0:
+                    self.minimum_value = 0
             # TODO Doesn't work with stacked bar graphs
             if self.larger_than_max(data_point):
                 self.maximum_value = data_point
