@@ -34,6 +34,8 @@ class Base(object):
 
     #: setting labels
     x_axis_label = y_axis_label = None
+
+    #: Experimental
     additional_line_values = False
 
     def __init__(self, target_width=DEFAULT_TARGET_WIDTH):
@@ -80,6 +82,8 @@ class Base(object):
         self.left_margin = DEFAULT_MARGIN
         self.right_margin = DEFAULT_MARGIN
         self.legend_margin = LEGEND_MARGIN
+
+        #: Blank space below the title
         self.title_margin = TITLE_MARGIN
 
         self.legend_box_size = 20.0
