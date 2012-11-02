@@ -58,7 +58,10 @@ class Line(Base):
                     dl.append(DrawableFillOpacity(self.transparent))
                 elif self.transparent is True:
                     dl.append(DrawableFillOpacity(DEFAULT_TRANSPARENCY))
-                dl.append(DrawableStrokeOpacity(1.0))
+                if type(self.transparent) is float:
+                    dl.append(DrawableStrokeOpacity(self.transparent))
+                elif self.transparent is True:
+                    dl.append(DrawableStrokeOpacity(DEFAULT_TRANSPARENCY))
                 dl.append(DrawableStrokeWidth(self.line_width or \
                         self.clip_value_if_greater_than(self.columns / \
                         (len(self.norm_data[0]['values']) * 4), 5.0)))

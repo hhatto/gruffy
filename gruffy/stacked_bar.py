@@ -25,6 +25,10 @@ class StackedBar(Base, StackedMixin):
         for raw_index, data_row in enumerate(self.norm_data):
             for point_index, data_point in enumerate(data_row['values']):
                 dl.append(DrawableFillColor(Color(data_row['color'])))
+                if type(self.transparent) is float:
+                    dl.append(DrawableFillOpacity(self.transparent))
+                elif self.transparent is True:
+                    dl.append(DrawableFillOpacity(DEFAULT_TRANSPARENCY))
                 # Calculate center based on bar_width and current row
                 label_center = self.graph_left + \
                                (self.bar_width * point_index) + \
