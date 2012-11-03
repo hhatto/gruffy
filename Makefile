@@ -19,6 +19,6 @@ pypireg:
 
 clean:
 	rm -f gruffy/*.pyc
-	rm -f *.png
+	rm -f *.png test/*.png example/*.png
 	rm -rf build dist gruffy.egg-info temp
 	cd test && rm -f gruffy_*.png && cd -
