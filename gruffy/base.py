@@ -314,11 +314,11 @@ class Base(object):
                 self.increment = 1
         else:
             # TODO Make this work for negative values
-            self.maximum_value = max([self.maximum_value.ceil,
+            self.maximum_value = max([math.ceil(self.maximum_value),
                                       self.y_axis_increment])
             self.minimum_value = math.floor(self.minimum_value)
             self.calculate_spread()
-            self.normalize(true)
+            self.normalize(force=True)
 
             self.marker_count = int(self.spread / self.y_axis_increment)
             self.increment = self.y_axis_increment

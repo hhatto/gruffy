@@ -84,13 +84,13 @@ class Line(Base):
         dl.append(DrawableScaling(self.scale, self.scale))
         self.base_image.draw(dl)
 
-    def normalize(self):
+    def normalize(self, force=False):
         if self.baseline_value:
             tmp = float(self.baseline_value)
         else:
             tmp = 0
         self.maximum_value = max([float(self.maximum_value), tmp])
-        Line.__base__.normalize(self)
+        Line.__base__.normalize(self, force)
         if self.baseline_value:
             self.norm_baseline = (float(self.baseline_value) / \
                                   float(self.maximum_value))
