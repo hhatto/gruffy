@@ -2,6 +2,9 @@ import math
 import os
 from pgmagick import *
 
+# Used for navigating the array of data to plot
+DATA_COLOR_INDEX = 2
+
 # Space around text elements. Mostly used for vertical spacing
 LEGEND_MARGIN = TITLE_MARGIN = 20.0
 LABEL_MARGIN = 10.0

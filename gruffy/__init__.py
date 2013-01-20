@@ -1,5 +1,6 @@
 from gruffy.area import Area
 from gruffy.bar import Bar
+from gruffy.bezier import Bezier
 from gruffy.dot import Dot
 from gruffy.line import Line
 from gruffy.pie import Pie
