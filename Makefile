@@ -17,7 +17,18 @@ pypireg:
 	python setup.py register
 	python setup.py sdist bdist_egg upload
 
-clean:
+builddocs:
+	cd docs/en && make html
+	cd docs/ja && make html
+	tar czf gruffy-docs.tar.gz docs/en/_build/html docs/ja/_build/html
+
+clean: cleandocs cleansrc
+
+cleandocs:
+	cd docs/en && make clean
+	cd docs/ja && make clean
+
+cleansrc:
 	rm -f gruffy/*.pyc
 	rm -f *.png test/*.png example/*.png
 	rm -rf build dist gruffy.egg-info temp
