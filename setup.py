@@ -5,7 +5,7 @@ from setuptools import setup
 
 setup(
     name='gruffy',
-    version='0.3.2',
+    version='0.3.3',
     description="Gruffy is Python implemetation of Gruff(Ruby Graphing Library)",
     long_description=open("README.rst").read(),
     license='MIT',
