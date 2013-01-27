@@ -1,6 +1,6 @@
 import os
 from unittest import TestCase, main
-from gruffy.accumulator_bar import AccumulatorBar
+from gruffy import AccumulatorBar
 
 TARGET_FILE = 'test.png'
 

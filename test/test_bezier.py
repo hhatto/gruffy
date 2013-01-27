@@ -1,6 +1,6 @@
 import os
 from unittest import TestCase, main
-from gruffy.bezier import Bezier
+from gruffy import Bezier
 
 TARGET_FILE = 'test.png'
 
