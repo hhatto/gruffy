@@ -1,6 +1,11 @@
 import math
 import os
-from pgmagick import *
+from pgmagick import Geometry, Image, Color, DrawableStrokeAntialias, \
+                     DrawableList, DrawableFillColor, DrawableLine, \
+                     DrawableFont, DrawableStrokeColor, DrawablePointSize, \
+                     DrawableGravity, DrawableText, DrawableScaling, \
+                     DrawableRotation, DrawableRectangle, \
+                     TypeMetric, GravityType, StyleType, StretchType
 
 # Used for navigating the array of data to plot
 DATA_COLOR_INDEX = 2

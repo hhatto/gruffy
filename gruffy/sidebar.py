@@ -1,8 +1,14 @@
 import copy
-from gruffy.base import *
+from gruffy import base
+from pgmagick import Color, DrawableFillColor, DrawableFillOpacity, \
+                     DrawableFont, DrawableGravity, DrawableLine, \
+                     DrawableList, DrawablePointSize, DrawableRectangle, \
+                     DrawableScaling, DrawableStrokeAntialias, \
+                     DrawableStrokeColor, DrawableStrokeOpacity, \
+                     DrawableStrokeWidth, DrawableText, GravityType, \
+                     StretchType, StyleType
 
-
-class SideBar(Base):
+class SideBar(base.Base):
     """Side Bar Graph Object"""
 
     bar_spacing = None
@@ -31,7 +37,7 @@ class SideBar(Base):
                 if type(self.transparent) is float:
                     self.dl.append(DrawableFillOpacity(self.transparent))
                 elif self.transparent is True:
-                    self.dl.append(DrawableFillOpacity(DEFAULT_TRANSPARENCY))
+                    self.dl.append(DrawableFillOpacity(base.DEFAULT_TRANSPARENCY))
                 # Using the original calcs from the stacked bar chart
                 # to get the difference between
                 # part of the bart chart we wish to stack.
@@ -88,7 +94,7 @@ class SideBar(Base):
 
             if not self.hide_line_numbers:
                 dl.append(DrawableFillColor(Color(self.font_color)))
-                font = self.font if self.font else DEFAULT_FONT
+                font = self.font if self.font else base.DEFAULT_FONT
                 dl.append(DrawableFont(font, StyleType.NormalStyle, 400,
                                        StretchType.NormalStretch))
                 dl.append(DrawableStrokeColor(Color('transparent')))
@@ -98,7 +104,7 @@ class SideBar(Base):
                                                   str(marker_label))
                 # TODO Center text over line
                 x -= text_width / 2
-                y = self.graph_bottom + (LABEL_MARGIN * 2.0)
+                y = self.graph_bottom + (base.LABEL_MARGIN * 2.0)
                 if type(marker_label) is int:
                     dl.append(DrawableText(x, y, "%d" % marker_label))
                 else:
@@ -111,16 +117,16 @@ class SideBar(Base):
         if index in self.labels and index not in self.labels_seen:
             dl = DrawableList()
             dl.append(DrawableFillColor(self.font_color))
-            font = self.font if self.font else DEFAULT_FONT
+            font = self.font if self.font else base.DEFAULT_FONT
             dl.append(DrawableGravity(GravityType.NorthEastGravity))
             dl.append(DrawableFont(font, StyleType.NormalStyle, 400,
                                    StretchType.NormalStretch))
             dl.append(DrawableStrokeColor(Color('transparent')))
             dl.append(DrawablePointSize(self.marker_font_size))
             font_hight = self.calculate_caps_height(self.marker_font_size)
-            text_width = self.calculate_width(self.marker_font_size,
-                                              self.labels[index])
-            x = self.raw_columns - self.graph_left + LABEL_MARGIN
+            #text_width = self.calculate_width(self.marker_font_size,
+            #                                  self.labels[index])
+            x = self.raw_columns - self.graph_left + base.LABEL_MARGIN
             y = y_offset + font_hight / 2.0
             dl.append(DrawableText(x, y, self.labels[index]))
             self.labels_seen[index] = 1
@@ -129,7 +135,7 @@ class SideBar(Base):
 
     def draw_values(self, y_offset, point):
         self.dl.append(DrawableFillColor(self.font_color))
-        font = self.font if self.font else DEFAULT_FONT
+        font = self.font if self.font else base.DEFAULT_FONT
         self.dl.append(DrawableGravity(GravityType.NorthWestGravity))
         self.dl.append(DrawableFont(font, StyleType.ItalicStyle, 400,
                                     StretchType.NormalStretch))
@@ -137,8 +143,8 @@ class SideBar(Base):
         marker_font_size = self.marker_font_size * 0.7
         self.dl.append(DrawablePointSize(marker_font_size))
         font_hight = self.calculate_caps_height(marker_font_size)
-        text_width = self.calculate_width(self.marker_font_size,
-                                          "%.2lf" % point)
-        x = self.graph_left + LABEL_MARGIN
+        #text_width = self.calculate_width(self.marker_font_size,
+        #                                  "%.2lf" % point)
+        x = self.graph_left + base.LABEL_MARGIN
         y = y_offset + font_hight / 2.0
         self.dl.append(DrawableText(x, y, "%.2lf" % point))

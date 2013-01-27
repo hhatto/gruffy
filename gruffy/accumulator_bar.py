@@ -20,7 +20,7 @@ class AccumulatorBar(StackedBar):
             else:
                 memo.append(value)
             accumulator_array.append(memo[index] - value)
-        increment_array = memo
+        #increment_array = memo
         self.data("Accumulator", accumulator_array)
         self.sort = False
         self.gdata.reverse()

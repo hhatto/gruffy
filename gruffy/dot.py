@@ -1,7 +1,13 @@
-from gruffy.base import *
+from gruffy import base
+from pgmagick import Color, DrawableCircle, DrawableFillColor, \
+                     DrawableFillOpacity, DrawableFont, DrawableGravity, \
+                     DrawableLine, DrawableList, DrawablePointSize, \
+                     DrawableScaling, DrawableStrokeAntialias, DrawableStrokeColor, \
+                     DrawableStrokeOpacity, DrawableStrokeWidth, DrawableText, \
+                     GravityType, StretchType, StyleType
 
 
-class Dot(Base):
+class Dot(base.Base):
     """Dot Graph Object"""
 
     def draw(self):
@@ -38,7 +44,7 @@ class Dot(Base):
                 if type(self.transparent) is float:
                     dl.append(DrawableFillOpacity(self.transparent))
                 elif self.transparent is True:
-                    dl.append(DrawableFillOpacity(DEFAULT_TRANSPARENCY))
+                    dl.append(DrawableFillOpacity(base.DEFAULT_TRANSPARENCY))
                 dl.append(DrawableStrokeColor('transparent'))
                 dl.append(DrawableCircle(x_pos,
                     y_pos, x_pos + round(float(self.item_width) / 3.0), y_pos))
@@ -67,13 +73,13 @@ class Dot(Base):
             line_diff = (self.graph_right - self.graph_left) / number_of_lines
             x = self.graph_right - (line_diff * index) - 1
             dl.append(DrawableLine(x, self.graph_bottom,
-                                   x, self.graph_bottom + 0.5 * LABEL_MARGIN))
+                                   x, self.graph_bottom + 0.5 * base.LABEL_MARGIN))
             diff = index - number_of_lines
             marker_label = abs(diff) * increment
 
             if not self.hide_line_numbers:
                 dl.append(DrawableFillColor(Color(self.font_color)))
-                font = self.font if self.font else DEFAULT_FONT
+                font = self.font if self.font else base.DEFAULT_FONT
                 dl.append(DrawableFont(font, StyleType.NormalStyle, 400,
                                        StretchType.NormalStretch))
                 dl.append(DrawableStrokeColor('transparent'))
@@ -83,7 +89,7 @@ class Dot(Base):
                 text_width = self.calculate_width(self.marker_font_size,
                                                   str(marker_label))
                 x -= text_width / 2.0
-                y = font_hight / 2.0 + self.graph_bottom + (LABEL_MARGIN * 2.0)
+                y = font_hight / 2.0 + self.graph_bottom + (base.LABEL_MARGIN * 2.0)
                 dl.append(DrawableText(x, y, str(marker_label)))
             dl.append(DrawableStrokeAntialias(True))
         dl.append(DrawableScaling(self.scale, self.scale))
@@ -93,16 +99,16 @@ class Dot(Base):
         if index in self.labels and index not in self.labels_seen:
             dl = DrawableList()
             dl.append(DrawableFillColor(Color(self.font_color)))
-            font = self.font if self.font else DEFAULT_FONT
+            font = self.font if self.font else base.DEFAULT_FONT
             dl.append(DrawableFont(font, StyleType.NormalStyle, 400,
                                    StretchType.NormalStretch))
             dl.append(DrawableStrokeColor('transparent'))
             dl.append(DrawablePointSize(self.marker_font_size))
             dl.append(DrawableGravity(GravityType.NorthEastGravity))
             font_hight = self.calculate_caps_height(self.marker_font_size)
-            text_width = self.calculate_width(self.marker_font_size,
-                                              self.labels[index])
-            x = self.raw_columns - self.graph_left + LABEL_MARGIN
+            #text_width = self.calculate_width(self.marker_font_size,
+            #                                  self.labels[index])
+            x = self.raw_columns - self.graph_left + base.LABEL_MARGIN
             y = y_offset + font_hight / 2.0
             dl.append(DrawableText(x, y, self.labels[index]))
             self.labels_seen[index] = 1

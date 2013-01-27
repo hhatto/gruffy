@@ -1,7 +1,10 @@
-from gruffy.base import *
+from gruffy import base
+from pgmagick import Color, DrawableFillColor, DrawableFillOpacity, \
+                     DrawableList, DrawableRectangle, DrawableScaling, \
+                     DrawableStrokeOpacity
 
 
-class StackedBar(Base, StackedMixin):
+class StackedBar(base.Base, base.StackedMixin):
     """Stacked Bar Graph Object"""
 
     bar_spacing = None
@@ -28,7 +31,7 @@ class StackedBar(Base, StackedMixin):
                 if type(self.transparent) is float:
                     dl.append(DrawableFillOpacity(self.transparent))
                 elif self.transparent is True:
-                    dl.append(DrawableFillOpacity(DEFAULT_TRANSPARENCY))
+                    dl.append(DrawableFillOpacity(base.DEFAULT_TRANSPARENCY))
                 # Calculate center based on bar_width and current row
                 label_center = self.graph_left + \
                                (self.bar_width * point_index) + \

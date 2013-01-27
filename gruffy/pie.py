@@ -1,4 +1,9 @@
-from gruffy.base import *
+import math
+from gruffy import base
+from pgmagick import Color, DrawableEllipse, DrawableFillColor, DrawableFont, \
+                     DrawableGravity, DrawableList, DrawablePointSize, \
+                     DrawableScaling, DrawableStrokeColor, DrawableStrokeWidth, \
+                     DrawableText, GravityType, StretchType, StyleType
 
 TEXT_OFFSET_PERCENTAGE = 0.15
 
@@ -7,7 +12,7 @@ def _deg2rad(angle):
     return angle * (math.pi / 180.0)
 
 
-class Pie(Base):
+class Pie(base.Base):
     """Pie Graph Object"""
 
     def _initialize_ivars(self):
@@ -93,7 +98,7 @@ class Pie(Base):
 
         # Draw label
         dl.append(DrawableFillColor(Color(self.font_color)))
-        font = self.font if self.font else DEFAULT_FONT
+        font = self.font if self.font else base.DEFAULT_FONT
         dl.append(DrawableFont(font, StyleType.NormalStyle, 900,
                                StretchType.NormalStretch))
         dl.append(DrawablePointSize(self.scale_fontsize(

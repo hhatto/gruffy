@@ -1,8 +1,10 @@
-from gruffy.base import *
+from gruffy import base
 from gruffy.bar_conversion import BarConversion
+from pgmagick import Color, DrawableFillColor, DrawableFillOpacity, DrawableList, \
+                     DrawableRectangle, DrawableScaling, DrawableStrokeOpacity
 
 
-class Bar(Base):
+class Bar(base.Base):
     """Bar Graph Object"""
 
     bar_spacing = 0
@@ -48,7 +50,7 @@ class Bar(Base):
                 if type(self.transparent) is float:
                     dl.append(DrawableFillOpacity(self.transparent))
                 elif self.transparent is True:
-                    dl.append(DrawableFillOpacity(DEFAULT_TRANSPARENCY))
+                    dl.append(DrawableFillOpacity(base.DEFAULT_TRANSPARENCY))
                 dl.append(DrawableRectangle(left_x, conv[0], right_x, conv[1]))
 
                 label_center = self.graph_left + \

@@ -1,8 +1,11 @@
 import copy
-from gruffy.base import *
+from gruffy import base
+from pgmagick import Color, Coordinate, CoordinateList, \
+                     DrawableFillColor, DrawableList, \
+                     DrawablePolyline, DrawableScaling, DrawableStrokeColor
 
 
-class StackedArea(Base, StackedMixin):
+class StackedArea(base.Base, base.StackedMixin):
     """Stacked Area Graph Object"""
 
     last_series_goes_on_bottom = None

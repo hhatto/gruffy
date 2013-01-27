@@ -1,7 +1,10 @@
-from gruffy.base import *
+from gruffy import base
+from pgmagick import Color, DrawableCircle, DrawableFillColor, DrawableFillOpacity, \
+                     DrawableLine, DrawableList, DrawableScaling, \
+                     DrawableStrokeColor, DrawableDashArray, \
+                     DrawableStrokeOpacity, DrawableStrokeWidth
 
-
-class Line(Base):
+class Line(base.Base):
     """Line Graph Object"""
 
     line_width = None
@@ -11,9 +14,9 @@ class Line(Base):
 
     def __init__(self, *args):
         if len(args):
-            Base.__init__(self, args[0])
+            base.Base.__init__(self, args[0])
         else:
-            Base.__init__(self)
+            base.Base.__init__(self)
         self.hide_dots = self.hide_lines = False
         self.baseline_color = 'red'
         self.baseline_value = None
@@ -33,12 +36,12 @@ class Line(Base):
                     self.norm_baseline * self.graph_height)
             dl.append(DrawableStrokeColor(Color(self.baseline_color)))
             dl.append(DrawableFillOpacity(0.0))
-            dl.append(DrawableStrokeDasharray(10, 20))
+            dl.append(DrawableDashArray(10, 20))
             dl.append(DrawableStrokeWidth(5))
             dl.append(DrawableLine(self.graph_left,
                 level, self.graph_left + self.graph_width, level))
             self.base_image.draw(dl)
-            del(dl)
+            #del(dl)
 
         for data_row in self.norm_data:
             prev_x = prev_y = None
@@ -57,11 +60,11 @@ class Line(Base):
                 if type(self.transparent) is float:
                     dl.append(DrawableFillOpacity(self.transparent))
                 elif self.transparent is True:
-                    dl.append(DrawableFillOpacity(DEFAULT_TRANSPARENCY))
+                    dl.append(DrawableFillOpacity(base.DEFAULT_TRANSPARENCY))
                 if type(self.transparent) is float:
                     dl.append(DrawableStrokeOpacity(self.transparent))
                 elif self.transparent is True:
-                    dl.append(DrawableStrokeOpacity(DEFAULT_TRANSPARENCY))
+                    dl.append(DrawableStrokeOpacity(base.DEFAULT_TRANSPARENCY))
                 dl.append(DrawableStrokeWidth(self.line_width or \
                         self.clip_value_if_greater_than(self.columns / \
                         (len(self.norm_data[0]['values']) * 4), 5.0)))

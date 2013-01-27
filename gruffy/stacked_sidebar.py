@@ -1,8 +1,11 @@
-from gruffy.base import *
+from gruffy import base
 from gruffy.sidebar import SideBar
+from pgmagick import Color, DrawableFillColor, DrawableFillOpacity, \
+                     DrawableList, DrawableRectangle, DrawableScaling, \
+                     DrawableStrokeOpacity
 
 
-class StackedSideBar(SideBar, StackedMixin):
+class StackedSideBar(SideBar, base.StackedMixin):
     """Stacked Side Bar Graph Object"""
 
     bar_spacing = None
@@ -39,7 +42,7 @@ class StackedSideBar(SideBar, StackedMixin):
                 if type(self.transparent) is float:
                     dl.append(DrawableFillOpacity(self.transparent))
                 elif self.transparent is True:
-                    dl.append(DrawableFillOpacity(DEFAULT_TRANSPARENCY))
+                    dl.append(DrawableFillOpacity(base.DEFAULT_TRANSPARENCY))
                 left_x = length[point_index]
                 left_y = self.graph_top + \
                          (self.bar_width * point_index) + padding

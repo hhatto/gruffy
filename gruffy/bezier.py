@@ -1,7 +1,10 @@
-from gruffy.base import *
+from gruffy import base
+from pgmagick import Coordinate, CoordinateList, DrawableBezier, \
+                     DrawableFillColor, DrawableFillOpacity, DrawableList, \
+                     DrawableStrokeColor, DrawableStrokeWidth
 
 
-class Bezier(Base):
+class Bezier(base.Base):
     """Bezier Graph Object"""
 
     def draw(self):

@@ -1,7 +1,10 @@
-from gruffy.base import *
+from gruffy import base
+from pgmagick import Color, DrawableList, DrawableFillColor, \
+                     DrawableStrokeColor, DrawableScaling, DrawableFillOpacity, \
+                     DrawablePolyline, Coordinate, CoordinateList
 
 
-class Area(Base):
+class Area(base.Base):
     """Area Graph Object
     """
 
@@ -20,7 +23,7 @@ class Area(Base):
             if type(self.transparent) is float:
                 dl.append(DrawableFillOpacity(self.transparent))
             elif self.transparent is True:
-                dl.append(DrawableFillOpacity(DEFAULT_TRANSPARENCY))
+                dl.append(DrawableFillOpacity(base.DEFAULT_TRANSPARENCY))
 
             for index, data_point in enumerate(data_row['values']):
                 # Use incremented x and scaled y
