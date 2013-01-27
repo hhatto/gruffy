@@ -16,8 +16,9 @@ Baseオブジェクトはすべてのグラフオブジェクトの基本オブ�
 .. autoclass:: gruffy.base.Base
    :members:
    :inherited-members:
+   :undoc-members:
 
-StackedMixinオブジェクト
+StackedMixin Object
 ------------------------
 データを積み重ねて表示するグラフを作成したい場合は、このオブジェクトを
 他のグラフオブジェクトと一緒に継承してください。
@@ -26,53 +27,73 @@ StackedMixinオブジェクト
 
 .. autoclass:: gruffy.base.StackedMixin
    :members:
-   :inherited-members:
 
 
-Areaグラフオブジェクト
+Area Graph Object
 ----------------------
 Areaオブジェクトは面グラフを作成するグラフオブジェクトです。
 
 .. autoclass:: Area
    :members:
+   :inherited-members:
 
 
-Barグラフオブジェクト
+Bar Graph Object
 ---------------------
 棒グラフを作成するためのオブジェクトです。
 
 .. autoclass:: Bar
    :members:
+   :inherited-members:
 
 
-Dotグラフオブジェクト
+Dot Graph Object
 ---------------------
 点グラフを作成するためのオブジェクトです。
 
 .. autoclass:: Dot
    :members:
+   :inherited-members:
 
 
-Lineグラフオブジェクト
+Line Graph Object
 ----------------------
 折れ線グラフを作成するためのオブジェクトです。
 
 .. autoclass:: Line
    :members:
+   :inherited-members:
 
 
-Pieグラフオブジェクト
+Pie Graph Object
 ---------------------
 パイグラフを作成するためのオブジェクトです。
 
 .. autoclass:: Pie
    :members:
+   :inherited-members:
 
 
-SideBarグラフオブジェクト
+SideBar Graph Object
 -------------------------
 横棒グラフを作成するためのオブジェクトです。
 
 .. autoclass:: SideBar
+   :members:
+   :inherited-members:
+
+
+Bezier Graph Object
+-------------------------
+ベジェ曲線グラフを作成するためのオブジェクトです。
+
+.. autoclass:: Bezier
+   :members:
+
+AccumulatorBar Graph Object
+-------------------------
+アキュムレーターグラフを作成するためのオブジェクトです。
+
+.. autoclass:: AccumulatorBar
    :members:
 
