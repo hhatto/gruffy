@@ -50,6 +50,13 @@ Bar Graph Sample::
     g.write('sample.png')
 
 
+Documentation
+-------------
+`Gruffy Documentation`_
+
+.. _`Gruffy Documentation`: http://www.hexacosa.net/documents/gruffy/
+
+
 Links
 -----
 * PyPI_
@@ -59,11 +66,4 @@ Links
 .. _PyPI: http://pypi.python.org/pypi/gruffy
 .. _GitHub: http://github.com/hhatto/gruffy
 .. _Jenkins: http://jenkins.hexacosa.net/job/gruffy/
-
-
-Documentation
--------------
-`Gruffy Documentation`_
-
-.. _`Gruffy Documentation`: http://www.hexacosa.net/documents/gruffy/
 
