@@ -1,3 +1,4 @@
+from gruffy.accumulator_bar import AccumulatorBar
 from gruffy.area import Area
 from gruffy.bar import Bar
 from gruffy.bezier import Bezier
@@ -9,5 +10,5 @@ from gruffy.stacked_area import StackedArea
 from gruffy.stacked_bar import StackedBar
 from gruffy.stacked_sidebar import StackedSideBar
 
-__all__ = ['Area', 'Bar', 'Dot', 'Line', 'Pie', 'SideBar', 'StackedArea', \
-           'StackedBar', 'StackedSideBar']
+__all__ = ['Accumulator', 'Area', 'Bar', 'Bezier', 'Dot', 'Line', 'Pie',
+           'SideBar', 'StackedArea', 'StackedBar', 'StackedSideBar']
