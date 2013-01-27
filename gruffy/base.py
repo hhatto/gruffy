@@ -41,6 +41,9 @@ class Base(object):
     #: Experimental
     additional_line_values = False
 
+    #: Manually set increment of the horizontal marking lines
+    y_axis_increment = None
+
     def __init__(self, target_width=DEFAULT_TARGET_WIDTH):
         if type(target_width) is not int:
             geometric_width, geometric_height = target_width.split('x')
@@ -103,7 +106,6 @@ class Base(object):
         self.additional_line_colors = []
         self.theme_options = {}
 
-        self.y_axis_increment = None
         self.stacked = None
         self.norm_data = None
 
