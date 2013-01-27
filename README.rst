@@ -1,5 +1,8 @@
+Gruffy
+======
+
 About
-=====
+-----
 Gruffy is a yet another Python Graphing Library.
 inspired by `Gruff`_ (Ruby Graphing Library).
 
@@ -9,15 +12,15 @@ This module using `pgmagick`_ (GraphicsMagick) .
 .. _`pgmagick`: http://pypi.python.org/pypi/pgmagick/
 
 
-Install
-=======
+Installation
+------------
 Install from PyPI::
 
     $ pip install gruffy
 
 
-Require
-=======
+Requirements
+------------
 `pgmagick`_ module.
 
 package install on Ubuntu::
@@ -28,7 +31,7 @@ package install on Ubuntu::
 
 
 Basic Usage
-===========
+-----------
 
 Bar Graph Sample::
 
@@ -47,16 +50,19 @@ Bar Graph Sample::
     g.write('sample.png')
 
 
-Getting the source
-==================
-Download from github_ or PyPI_
+Links
+-----
+* PyPI_
+* GitHub_
+* Jenkins_
 
-.. _github: http://github.com/hhatto/gruffy
 .. _PyPI: http://pypi.python.org/pypi/gruffy
+.. _GitHub: http://github.com/hhatto/gruffy
+.. _Jenkins: http://jenkins.hexacosa.net/job/gruffy/
 
 
 Documentation
-=============
+-------------
 `Gruffy Documentation`_
 
 .. _`Gruffy Documentation`: http://www.hexacosa.net/documents/gruffy/
