@@ -1,5 +1,6 @@
 Gruffy
 ======
+Python Graphing Library
 
 About
 -----
