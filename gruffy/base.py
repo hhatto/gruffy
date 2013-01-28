@@ -437,7 +437,7 @@ class Base(object):
             elif a_sum < b_sum:
                 return -1
             return 0
-        self.norm_data.sort(normcompare)
+        self.norm_data.sort(key=normcompare)
         self.norm_data.reverse()
 
     def center(self, size):
@@ -691,7 +691,7 @@ class Base(object):
             # Make space for half the width of the rightmost column label.
             # Might be greater than the number of columns if between-style bar
             # markers are used.
-            tmp = self.labels.keys()
+            tmp = list(self.labels.keys())
             tmp.sort()
             if len(tmp):
                 last_label = int(tmp[-1])
