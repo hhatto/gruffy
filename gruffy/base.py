@@ -437,7 +437,7 @@ class Base(object):
             elif a_sum < b_sum:
                 return -1
             return 0
-        self.norm_data.sort(key=normcompare)
+        sorted(self.norm_data, cmp=normcompare)
         self.norm_data.reverse()
 
     def center(self, size):
@@ -606,6 +606,8 @@ class Base(object):
                                        'color': data_row['color']})
 
     def calculate_spread(self):
+        if not self.minimum_value:
+            self.minimum_value = 0
         self.spread = float(self.maximum_value) - float(self.minimum_value)
         if self.spread <= 0:
             self.spread = 1

@@ -40,7 +40,7 @@ class Pie(base.Base):
             elif comp_a['values'][0] < comp_b['values'][0]:
                 return -1
             return 0
-        self.gdata.sort(percentages_compare)
+        sorted(self.gdata, cmp=percentages_compare)
 
         dl = DrawableList()
         for data_row in self.gdata:
